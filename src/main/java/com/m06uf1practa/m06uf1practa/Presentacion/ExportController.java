@@ -1,5 +1,6 @@
 package com.m06uf1practa.m06uf1practa.Presentacion;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -23,12 +24,12 @@ public class ExportController {
 
     @FXML
     void closeExportWindow(MouseEvent event) {
-
+        
     }
 
     @FXML
     void exportFile(MouseEvent event) {
-
+        
     }
 
 }

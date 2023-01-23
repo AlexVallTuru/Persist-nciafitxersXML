@@ -29,6 +29,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class PrimaryController implements Initializable {
 
@@ -121,16 +122,18 @@ public class PrimaryController implements Initializable {
     @FXML
     void exportarArchivo(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("com.m06uf1practa.m06uf1practa.export.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../export.fxml"));
             Parent root = loader.load();
             ExportController controller = loader.getController();
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(scene);
             stage.showAndWait();
 
         } catch (Exception e) {
+            e.printStackTrace();
 
         }
 
@@ -138,20 +141,17 @@ public class PrimaryController implements Initializable {
 
     @FXML
     void cercaDades(ActionEvent event) {
-        System.out.println(dpFirst.getValue());
-        /*if (!intxtNom.getText().isEmpty()
-                && !intxtMunicipi.getText().isEmpty()
-                && !intxtLocalitat.getText().isEmpty()
-                && !chbxAmbit.getValue().equals("Cap")
-                && !intxtMunicipi.getText().isEmpty()
-                && !dpFirst.getValue().toString().isEmpty()
-                && !dpSecond.getValue().toString().isEmpty()) {
-            tblView.setItems(xmlLogica.cercaDades(intxtNom.getText(), chbxAmbit.getValue(),
-                    intxtLocalitat.getText(), intxtMunicipi.getText(), nombreFiesta.getValue(), dpFirst.getValue(), dpSecond.getValue()));
 
-        } else {*/
-        tblView.setItems(xmlLogica.checkTable(intxtNom.getText(), chbxAmbit.getValue(), intxtMunicipi.getText(), intxtLocalitat.getText(), nombreFiesta.getValue(), dpFirst.getValue(), dpSecond.getValue()));
-        //}
+        tblView.setItems(
+                xmlLogica.checkTable(
+                        intxtNom.getText(),
+                        chbxAmbit.getValue(),
+                        intxtMunicipi.getText(),
+                        intxtLocalitat.getText(),
+                        nombreFiesta.getValue(),
+                        dpFirst.getValue(),
+                        dpSecond.getValue()));
+
         tblView.refresh();
 
     }
@@ -159,7 +159,8 @@ public class PrimaryController implements Initializable {
     @FXML
     void importarFichero(ActionEvent event) {
 
-        tblView.setItems(xmlLogica.cargarFichero(btnmenu.getScene().getWindow()));
+        tblView.setItems(
+                xmlLogica.cargarFichero(btnmenu.getScene().getWindow()));
         nombreFiesta.getItems().addAll(xmlLogica.fiestas());
 
     }
