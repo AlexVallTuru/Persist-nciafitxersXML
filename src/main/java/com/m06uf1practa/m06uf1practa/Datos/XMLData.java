@@ -51,7 +51,21 @@ public class XMLData implements XMLDataInterface {
         resultados = FXCollections.observableArrayList();
         for (Festivos valor : festivos) {
 
-            if (valor.getAmbito().equalsIgnoreCase(nombre)) {
+            if (valor.getNombreIsla().equalsIgnoreCase(nombre)) {
+                resultados.add(valor);
+
+            }
+        }
+        System.out.println(resultados);
+        return resultados;
+    }
+    
+    @Override
+    public ObservableList<Festivos> FiltrarPorMunicipio(String municipio) {
+        resultados = FXCollections.observableArrayList();
+        for (Festivos valor : festivos) {
+
+            if (valor.getMunicipio().equalsIgnoreCase(municipio)) {
                 resultados.add(valor);
 
             }
@@ -101,6 +115,21 @@ public class XMLData implements XMLDataInterface {
         System.out.println(resultados);
         return resultados;
     }
+    
+    @Override
+    public ObservableList<Festivos> FiltrarPorLocalidad(String localidad) {
+        resultados = FXCollections.observableArrayList();
+        for (Festivos valor : festivos) {
+
+            if (valor.getLocalidad().equalsIgnoreCase(localidad)) {
+                resultados.add(valor);
+
+            }
+        }
+        System.out.println(resultados);
+        return resultados;
+
+    }
 
     @Override
     public File cargarFichero(Window window) {
@@ -125,7 +154,7 @@ public class XMLData implements XMLDataInterface {
         return null;
     }
 
-    public ObservableList<Festivos> FiltradoCompleto(String nom, String ambit, String localitat, String municipi, String nombreFiesta) {
+    public ObservableList<Festivos> FiltradoCompleto(String nom, String ambit, String localitat, String municipi, String nombreFiesta,LocalDate d1,LocalDate d2) {
         
         resultados = FXCollections.observableArrayList();
         for (Festivos valor : festivos) {
@@ -134,7 +163,8 @@ public class XMLData implements XMLDataInterface {
                     && (valor.getAmbito().equalsIgnoreCase(ambit) || ambit.equals("Cap"))
                     && (valor.getMunicipio().equalsIgnoreCase(municipi) || municipi.isEmpty())
                     && (valor.getLocalidad().equalsIgnoreCase(localitat) || localitat.isEmpty())
-                    && (valor.getNombreFiesta().equals(nombreFiesta) || nombreFiesta.equals("Fiesta"))) {
+                    && (valor.getNombreFiesta().equals(nombreFiesta) || nombreFiesta.equals("Fiesta"))
+                    && (valor.getFecha().isAfter(d1) && valor.getFecha().isBefore(d2))) {
                 resultados.add(valor);
 
             }

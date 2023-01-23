@@ -61,7 +61,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="Fitxer">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Exportar" />
+                  <MenuItem fx:id="exportFile" mnemonicParsing="false" onAction="#exportarArchivo" text="Exportar" />
               <MenuItem fx:id="importFile" mnemonicParsing="false" onAction="#importarFichero" text="Importar" />
             </items>
           </Menu>

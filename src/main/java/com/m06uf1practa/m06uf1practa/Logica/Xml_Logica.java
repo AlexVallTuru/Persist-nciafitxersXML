@@ -81,33 +81,87 @@ public class Xml_Logica implements XMLLogicInterface {
         System.out.println(localitat.isEmpty());
         System.out.println(municipi.isEmpty());
         System.out.println(nombreFiesta);
-        if ((!nom.isEmpty() && !ambit.equals("Cap") && !localitat.isEmpty() && !municipi.isEmpty() && !nombreFiesta.equals("Festa") && (d1.toString().isEmpty() || d1 == null) && (d2.toString().isEmpty() ||d2 == null))) {
-            lis = datos.FiltradoCompleto(nom, ambit, localitat, municipi, nombreFiesta);
+        
+        /**
+         * Filtrar con todos los datos
+         */
+        if ((!nom.isEmpty() 
+                && !ambit.equals("Cap") 
+                && !localitat.isEmpty() 
+                && !municipi.isEmpty() 
+                && !nombreFiesta.equals("Festa") 
+                && (d1 != null) 
+                && (d2 != null))) {
+            lis = datos.FiltradoCompleto(nom, ambit, localitat, municipi, nombreFiesta,d1,d2);
             return lis;
 
         }
-
-        if (nom.isEmpty() && localitat.isEmpty() && !ambit.equals("Cap") && municipi.isEmpty() && nombreFiesta.equals("Festa") && (d1.toString().isEmpty() || d1 == null) && (d2.toString().isEmpty() ||d2 == null)) {
+        
+        /**
+         * Filtrar por Ambito
+         */
+        if (nom.isEmpty() 
+                && localitat.isEmpty() 
+                && !ambit.equals("Cap") 
+                && municipi.isEmpty() 
+                && nombreFiesta.equals("Festa") 
+                && (d1 == null) 
+                && (d2 == null)) {
 
             lis = datos.FiltrarPorAmbito(ambit);
             return lis;
 
         }
-
-        if (!nom.isEmpty() && localitat.isEmpty() && ambit.equals("Cap") && municipi.isEmpty() && nombreFiesta.equals("Festa") && (d1 == null) && (d2 == null)) {
+        
+        /**
+         * Filtrar por nombre
+         */
+        if (!nom.isEmpty() 
+                && localitat.isEmpty() 
+                && ambit.equals("Cap") 
+                && municipi.isEmpty() 
+                && nombreFiesta.equals("Festa") 
+                && (d1 == null) && (d2 == null)) {
 
             lis = datos.FiltrarPorNombre(nom);
             return lis;
 
         }
+        
+        /**
+         * Filtrar por municipio
+         */
+        
+        if (nom.isEmpty() 
+                && localitat.isEmpty() 
+                && ambit.equals("Cap") 
+                && !municipi.isEmpty() 
+                && nombreFiesta.equals("Festa") 
+                && (d1 == null) && (d2 == null)) {
 
-        if (nom.isEmpty() && localitat.isEmpty() && !ambit.equals("Cap") && municipi.isEmpty() && nombreFiesta.equals("Festa") && (d1.toString().isEmpty() || d1 == null) && (d2.toString().isEmpty() ||d2 == null)) {
-
-            lis = datos.FiltrarPorAmbito(ambit);
+            lis = datos.FiltrarPorMunicipio(municipi);
             return lis;
 
         }
 
+        /**
+         * Filtrar por localidad
+         */
+        if (nom.isEmpty() 
+                && !localitat.isEmpty()
+                && ambit.equals("Cap") 
+                && municipi.isEmpty() 
+                && nombreFiesta.equals("Festa") 
+                && (d1 == null) && (d2 == null)) {
+
+            lis = datos.FiltrarPorLocalidad(localitat);
+            return lis;
+
+        }
+
+        /**
+         * Filtrar entre dos fechas
+         */
         if (nom.isEmpty() && localitat.isEmpty()
                 && ambit.equals("Cap")
                 && municipi.isEmpty()
@@ -120,7 +174,16 @@ public class Xml_Logica implements XMLLogicInterface {
 
         }
 
-        if (nom.isEmpty() && localitat.isEmpty() && ambit.equals("Cap") && municipi.isEmpty() && !nombreFiesta.equalsIgnoreCase("Festa")) {
+        /**
+         * Filtrar por Fiesta
+         */
+        if (nom.isEmpty() 
+                && localitat.isEmpty() 
+                && ambit.equals("Cap") 
+                && municipi.isEmpty() 
+                && !nombreFiesta.equalsIgnoreCase("Festa")
+                && (d1 == null) 
+                && (d2 == null)) {
 
             lis = datos.FiltrarPorFiesta(nombreFiesta);
             return lis;
@@ -135,8 +198,8 @@ public class Xml_Logica implements XMLLogicInterface {
                 && municipio.isEmpty() 
                 && localitat.isEmpty() 
                 && nombreFiesta.equals("Festa") 
-                && !d1.toString().isEmpty()
-                && !d2.toString().isEmpty()) {
+                && d1 == null
+                && d2 == null) {
             return datos.leerFichero(file);
         } else {
             return cercaDades(nombre, ambit, localitat, municipio, nombreFiesta, d1, d2);
@@ -150,8 +213,8 @@ public class Xml_Logica implements XMLLogicInterface {
                 && municipio.isEmpty() 
                 && localitat.isEmpty() 
                 && nombreFiesta.equals("Festa") 
-                && !d1.toString().isEmpty() 
-                && !d2.toString().isEmpty()) {
+                && d1 == null 
+                && d2==null) {
             return datos.leerFichero(file);
         }
         return null;

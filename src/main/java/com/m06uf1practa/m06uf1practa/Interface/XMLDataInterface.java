@@ -28,6 +28,10 @@ public interface XMLDataInterface {
     
     public ObservableList<Festivos> FiltrarPorFiesta(String fiesta);
     
+    public ObservableList<Festivos> FiltrarPorMunicipio(String municipio);
+    
+    public ObservableList<Festivos> FiltrarPorLocalidad(String localidad);
+    
     public File cargarFichero(Window w);
             
 }

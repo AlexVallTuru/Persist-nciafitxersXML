@@ -9,7 +9,10 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
@@ -24,6 +27,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class PrimaryController implements Initializable {
 
@@ -69,6 +74,9 @@ public class PrimaryController implements Initializable {
     private TableColumn<Festivos, String> lblAmbit;
 
     @FXML
+    private MenuItem exportFile;
+
+    @FXML
     private TableColumn<Festivos, String> lblData;
 
     @FXML
@@ -104,8 +112,28 @@ public class PrimaryController implements Initializable {
         intxtMunicipi.clear();
         intxtLocalitat.clear();
         nombreFiesta.setValue("Festa");
+        dpFirst.setValue(null);
+        dpSecond.setValue(null);
 
-        tblView.setItems(xmlLogica.neteja(intxtNom.getText(), chbxAmbit.getValue(), intxtMunicipi.getText(), intxtLocalitat.getText(), nombreFiesta.getValue(),dpFirst.getValue(), dpSecond.getValue()));
+        tblView.setItems(xmlLogica.neteja(intxtNom.getText(), chbxAmbit.getValue(), intxtMunicipi.getText(), intxtLocalitat.getText(), nombreFiesta.getValue(), dpFirst.getValue(), dpSecond.getValue()));
+    }
+
+    @FXML
+    void exportarArchivo(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("com.m06uf1practa.m06uf1practa.export.fxml"));
+            Parent root = loader.load();
+            ExportController controller = loader.getController();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(scene);
+            stage.showAndWait();
+
+        } catch (Exception e) {
+
+        }
+
     }
 
     @FXML
@@ -122,7 +150,7 @@ public class PrimaryController implements Initializable {
                     intxtLocalitat.getText(), intxtMunicipi.getText(), nombreFiesta.getValue(), dpFirst.getValue(), dpSecond.getValue()));
 
         } else {*/
-            tblView.setItems(xmlLogica.checkTable(intxtNom.getText(), chbxAmbit.getValue(), intxtMunicipi.getText(), intxtLocalitat.getText(), nombreFiesta.getValue(), dpFirst.getValue(), dpSecond.getValue()));
+        tblView.setItems(xmlLogica.checkTable(intxtNom.getText(), chbxAmbit.getValue(), intxtMunicipi.getText(), intxtLocalitat.getText(), nombreFiesta.getValue(), dpFirst.getValue(), dpSecond.getValue()));
         //}
         tblView.refresh();
 

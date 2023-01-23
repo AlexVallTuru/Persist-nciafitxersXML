@@ -4,6 +4,7 @@ module com.m06uf1practa.m06uf1practa {
 
     opens com.m06uf1practa.m06uf1practa to javafx.fxml;
     requires nu.xom;
+    requires java.base;
     opens com.m06uf1practa.m06uf1practa.Presentacion to javafx.fxml;
     opens com.m06uf1practa.m06uf1practa.Datos to javafx.fxml;
     opens com.m06uf1practa.m06uf1practa.Logica to javafx.fxml;
