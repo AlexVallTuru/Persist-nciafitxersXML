@@ -12,11 +12,23 @@ import java.time.format.DateTimeFormatter;
  * @author Carlos
  */
 public class Utils {
-    
-    public String  convertLocalDate(LocalDate fecha){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        return fecha.format(formatter);
-        
+
+    public LocalDate convertLocalDate(String fecha) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return LocalDate.parse(fecha, formatter);
+
+    }
+
+    public String capitalizeName(String name) {
+        String nueva_cadena;
+        char primeraLetra = name.charAt(0);
+        if (Character.isAlphabetic(primeraLetra)) {
+            nueva_cadena = name.substring(0, 1).toUpperCase() + name.substring(1, name.length());
+            return nueva_cadena;
+        }
+        return name;
+
     }
     
+
 }

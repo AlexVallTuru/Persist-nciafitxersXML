@@ -15,13 +15,13 @@ import javafx.stage.Window;
  */
 public interface XMLLogicInterface {
         
-    public void FiltrarPorNombre();
+    public ObservableList<Festivos> FiltrarPorNombre();
     
-    public void FiltrarPorFechas();
+    public ObservableList<Festivos> FiltrarPorFechas();
     
-    public void FiltrarPorAmbito();
+    public ObservableList<Festivos> FiltrarPorAmbito();
     
-    public void FiltrarPorFiesta();
+    public ObservableList<Festivos> FiltrarPorFiesta();
     
     public ObservableList<Festivos> cargarFichero(Window w);
     

@@ -6,10 +6,17 @@ package com.m06uf1practa.m06uf1practa.Datos;
 
 import com.m06uf1practa.m06uf1practa.Modelos.Festivos;
 import com.m06uf1practa.m06uf1practa.Interface.XMLDataInterface;
+import com.m06uf1practa.m06uf1practa.Utils.Utils;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
@@ -24,9 +31,11 @@ import nu.xom.Elements;
  * @author Carlos
  */
 public class XMLData implements XMLDataInterface {
-    
+
     private ObservableList<Festivos> festivos;
     private ObservableList<Festivos> resultados;
+    private SortedSet<String> nombreFiestas;
+    
     @Override
     public void ImportarDocumento() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -38,27 +47,63 @@ public class XMLData implements XMLDataInterface {
     }
 
     @Override
-    public void FiltrarPorNombre() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public ObservableList<Festivos> FiltrarPorNombre(String nombre) {
+        resultados = FXCollections.observableArrayList();
+        for (Festivos valor : festivos) {
+
+            if (valor.getAmbito().equalsIgnoreCase(nombre)) {
+                resultados.add(valor);
+
+            }
+        }
+        System.out.println(resultados);
+        return resultados;
     }
 
     @Override
-    public void FiltrarPorFechas() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public ObservableList<Festivos> FiltrarPorFechas(LocalDate d1, LocalDate d2) {
+      resultados = FXCollections.observableArrayList();
+        for (Festivos valor : festivos) {
+
+            if (valor.getFecha().isAfter(d1) && valor.getFecha().isBefore(d2)) {
+                resultados.add(valor);
+
+            }
+        }
+        System.out.println(resultados);
+        return resultados; }
+
+    @Override
+    public ObservableList<Festivos> FiltrarPorAmbito(String ambit) {
+        resultados = FXCollections.observableArrayList();
+        for (Festivos valor : festivos) {
+
+            if (valor.getAmbito().equalsIgnoreCase(ambit)) {
+                resultados.add(valor);
+
+            }
+        }
+        System.out.println(resultados);
+        return resultados;
+
     }
 
     @Override
-    public void FiltrarPorAmbito() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public ObservableList<Festivos> FiltrarPorFiesta(String fiesta) {
+        resultados = FXCollections.observableArrayList();
+        for (Festivos valor : festivos) {
+
+            if (valor.getNombreFiesta().equalsIgnoreCase(fiesta)) {
+                resultados.add(valor);
+
+            }
+        }
+        System.out.println(resultados);
+        return resultados;
     }
 
     @Override
-    public void FiltrarPorFiesta() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
-    @Override
-    public File cargarFichero(Window window){
+    public File cargarFichero(Window window) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open XML File");
         fileChooser.getExtensionFilters().addAll(
@@ -79,22 +124,30 @@ public class XMLData implements XMLDataInterface {
         }
         return null;
     }
-    
-    public ObservableList<Festivos> FiltradoCompleto(String nom,String ambit,String localitat,String municipi){
+
+    public ObservableList<Festivos> FiltradoCompleto(String nom, String ambit, String localitat, String municipi, String nombreFiesta) {
         
         resultados = FXCollections.observableArrayList();
-        for(Festivos valor : festivos){
-            if(valor.getNombreIsla().equalsIgnoreCase(nom) || valor.getAmbito().equals(ambit) || valor.getMunicipio().equalsIgnoreCase(municipi)  ){
+        for (Festivos valor : festivos) {
+
+            if ((valor.getNombreIsla().equalsIgnoreCase(nom) || nom.isEmpty())
+                    && (valor.getAmbito().equalsIgnoreCase(ambit) || ambit.equals("Cap"))
+                    && (valor.getMunicipio().equalsIgnoreCase(municipi) || municipi.isEmpty())
+                    && (valor.getLocalidad().equalsIgnoreCase(localitat) || localitat.isEmpty())
+                    && (valor.getNombreFiesta().equals(nombreFiesta) || nombreFiesta.equals("Fiesta"))) {
                 resultados.add(valor);
+
             }
         }
+        System.out.println(resultados);
         return resultados;
-        
+
     }
-    
+
     public ObservableList<Festivos> leerFichero(File fichero) {
         festivos = FXCollections.observableArrayList();
-        
+        nombreFiestas = new TreeSet<>();
+        Utils utils = new Utils();
         try {
             Builder builder = new Builder();
             Document doc = builder.build(fichero);
@@ -116,15 +169,21 @@ public class XMLData implements XMLDataInterface {
                 String localitatValue = localitat.getValue();
                 String dataValue = data.getValue();
                 String nom_festaValue = nom_festa.getValue();
-                
-                festivos.add(new Festivos(illaValue,mbitValue,municipiValue,localitatValue,dataValue,nom_festaValue));
+
+                nombreFiestas.add(utils.capitalizeName(nom_festaValue));
+                festivos.add(new Festivos(illaValue, mbitValue, municipiValue, localitatValue, utils.convertLocalDate(dataValue), utils.capitalizeName(nom_festaValue)));
 
             }
+            
             return festivos;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
-    
+
+    public SortedSet<String> fiestas() {
+        return this.nombreFiestas;
+    }
+
 }

@@ -4,6 +4,8 @@
  */
 package com.m06uf1practa.m06uf1practa.Modelos;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author Carlos
@@ -13,13 +15,13 @@ public class Festivos {
     private String ambito;
     private String municipio;
     private String localidad;
-    private String fecha;
+    private LocalDate fecha;
     private String nombreFiesta;
 
     public Festivos() {
     }
 
-    public Festivos(String nombreIsla, String ambito, String municipio, String localidad, String fecha, String nombreFiesta) {
+    public Festivos(String nombreIsla, String ambito, String municipio, String localidad, LocalDate fecha, String nombreFiesta) {
         this.nombreIsla = nombreIsla;
         this.ambito = ambito;
         this.municipio = municipio;
@@ -60,11 +62,11 @@ public class Festivos {
         this.localidad = localidad;
     }
 
-    public String getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 

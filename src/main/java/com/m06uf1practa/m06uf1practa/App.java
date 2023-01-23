@@ -27,7 +27,9 @@ public class App extends Application {
         scene = new Scene(loadFXML("primary"), 928, 540);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
-        stage.setResizable(false);
+        stage.maxHeightProperty().set(540);
+        stage.maxWidthProperty().set(928);
+        stage.setResizable(true);
         stage.show();
 
         scene.setOnMousePressed(new EventHandler<MouseEvent>() {

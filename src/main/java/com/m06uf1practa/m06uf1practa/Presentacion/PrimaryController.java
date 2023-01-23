@@ -27,6 +27,8 @@ import javafx.scene.text.Text;
 
 public class PrimaryController implements Initializable {
 
+    Xml_Logica xmlLogica = new Xml_Logica();
+
     @FXML
     private Button btnCerca;
 
@@ -50,12 +52,15 @@ public class PrimaryController implements Initializable {
 
     @FXML
     private TextField intxtLocalitat;
-    
+
     @FXML
     private TextField intxtNom;
-    
+
     @FXML
     private TableView tblView;
+
+    @FXML
+    private Button neteja;
 
     @FXML
     private TextField intxtMunicipi;
@@ -81,37 +86,55 @@ public class PrimaryController implements Initializable {
     @FXML
     private TableColumn<Festivos, String> lblNom;
 
-    Xml_Logica xmlLogica = new Xml_Logica();
-
     @FXML
     private Text lvlCercaDades;
+
+    @FXML
+    private ChoiceBox<String> nombreFiesta;
 
     @FXML
     void closeApp(MouseEvent event) {
         Platform.exit();
     }
-    
+
+    @FXML
+    void limpiarTabla(ActionEvent event) {
+        intxtNom.clear();
+        chbxAmbit.setValue("Cap");
+        intxtMunicipi.clear();
+        intxtLocalitat.clear();
+        nombreFiesta.setValue("Festa");
+
+        tblView.setItems(xmlLogica.neteja(intxtNom.getText(), chbxAmbit.getValue(), intxtMunicipi.getText(), intxtLocalitat.getText(), nombreFiesta.getValue(),dpFirst.getValue(), dpSecond.getValue()));
+    }
+
     @FXML
     void cercaDades(ActionEvent event) {
-        //xmlLogica.clearTable(tblView);
-        System.out.println(chbxAmbit.getValue());
-        tblView.setItems(xmlLogica.checkTable(intxtNom.getText(),chbxAmbit.getValue(),intxtMunicipi.getText()));
-        if(!intxtNom.getText().isEmpty() && intxtMunicipi.getText().isEmpty()  ){
-            tblView.setItems(xmlLogica.cercaDades(intxtNom.getText(),chbxAmbit.getValue(),
-                intxtLocalitat.getText(),intxtMunicipi.getText()));
-            
-        }
-        
+        System.out.println(dpFirst.getValue());
+        /*if (!intxtNom.getText().isEmpty()
+                && !intxtMunicipi.getText().isEmpty()
+                && !intxtLocalitat.getText().isEmpty()
+                && !chbxAmbit.getValue().equals("Cap")
+                && !intxtMunicipi.getText().isEmpty()
+                && !dpFirst.getValue().toString().isEmpty()
+                && !dpSecond.getValue().toString().isEmpty()) {
+            tblView.setItems(xmlLogica.cercaDades(intxtNom.getText(), chbxAmbit.getValue(),
+                    intxtLocalitat.getText(), intxtMunicipi.getText(), nombreFiesta.getValue(), dpFirst.getValue(), dpSecond.getValue()));
+
+        } else {*/
+            tblView.setItems(xmlLogica.checkTable(intxtNom.getText(), chbxAmbit.getValue(), intxtMunicipi.getText(), intxtLocalitat.getText(), nombreFiesta.getValue(), dpFirst.getValue(), dpSecond.getValue()));
+        //}
+        tblView.refresh();
+
     }
 
     @FXML
     void importarFichero(ActionEvent event) {
-        
+
         tblView.setItems(xmlLogica.cargarFichero(btnmenu.getScene().getWindow()));
+        nombreFiesta.getItems().addAll(xmlLogica.fiestas());
 
     }
-    
-    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -127,12 +150,14 @@ public class PrimaryController implements Initializable {
 
     public void initValues() {
         Image image = new Image("images\\close.png");
+        tblView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tblView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
         btnClose.setImage(image);
         chbxAmbit.getItems().add("Autonòmic");
         chbxAmbit.getItems().add("Local");
         chbxAmbit.getItems().add("Cap");
-        chbxAmbit.setValue("Ambit");
-        
+        nombreFiesta.setValue("Festa");
+        chbxAmbit.setValue("Cap");
         lblNom.setCellValueFactory(new PropertyValueFactory<>("nombreIsla"));
         lblAmbit.setCellValueFactory(new PropertyValueFactory<>("ambito"));
         lblMunicipi.setCellValueFactory(new PropertyValueFactory<>("municipio"));
@@ -141,7 +166,5 @@ public class PrimaryController implements Initializable {
         lblFesta.setCellValueFactory(new PropertyValueFactory<>("nombreFiesta"));
 
     }
-    
-    
 
 }

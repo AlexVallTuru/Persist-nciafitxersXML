@@ -6,6 +6,7 @@ package com.m06uf1practa.m06uf1practa.Interface;
 
 import com.m06uf1practa.m06uf1practa.Modelos.Festivos;
 import java.io.File;
+import java.time.LocalDate;
 import javafx.collections.ObservableList;
 import javafx.stage.Window;
 
@@ -19,13 +20,13 @@ public interface XMLDataInterface {
     
     public void ExportarDocumento();
     
-    public void FiltrarPorNombre();
+    public ObservableList<Festivos> FiltrarPorNombre(String nombre);
     
-    public void FiltrarPorFechas();
+    public ObservableList<Festivos> FiltrarPorFechas(LocalDate d1,LocalDate d2);
     
-    public void FiltrarPorAmbito();
+    public ObservableList<Festivos> FiltrarPorAmbito(String ambit);
     
-    public void FiltrarPorFiesta();
+    public ObservableList<Festivos> FiltrarPorFiesta(String fiesta);
     
     public File cargarFichero(Window w);
             
