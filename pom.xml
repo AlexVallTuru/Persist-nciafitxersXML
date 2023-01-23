@@ -41,7 +41,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.4</version>
                 <configuration>
-                    <mainClass>com.m06uf1practa.m06uf1practa.App</mainClass>
+                    <mainClass>Presentacion.App</mainClass>
                 </configuration>
                 <executions>
                     <execution>

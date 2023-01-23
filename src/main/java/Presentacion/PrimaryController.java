@@ -1,7 +1,7 @@
-package com.m06uf1practa.m06uf1practa.Presentacion;
+package Presentacion;
 
-import com.m06uf1practa.m06uf1practa.Modelos.Festivos;
-import com.m06uf1practa.m06uf1practa.Logica.Xml_Logica;
+import Modelos.Festivos;
+import Logica.Xml_Logica;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;

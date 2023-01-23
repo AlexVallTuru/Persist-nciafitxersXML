@@ -1,6 +1,5 @@
-package com.m06uf1practa.m06uf1practa.Presentacion;
+package Presentacion;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;

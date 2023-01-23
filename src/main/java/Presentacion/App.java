@@ -1,4 +1,4 @@
-package com.m06uf1practa.m06uf1practa;
+package Presentacion;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
