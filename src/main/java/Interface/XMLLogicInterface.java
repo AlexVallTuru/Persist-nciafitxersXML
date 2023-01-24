@@ -4,6 +4,7 @@
  */
 package Interface;
 
+import Errors.LogicError;
 import Modelos.Festivos;
 import java.io.File;
 import javafx.collections.ObservableList;
@@ -23,6 +24,6 @@ public interface XMLLogicInterface {
     
     public ObservableList<Festivos> FiltrarPorFiesta();
     
-    public ObservableList<Festivos> cargarFichero(Window w);
+    public ObservableList<Festivos> cargarFichero(Window w) throws LogicError;
     
 }

@@ -1,7 +1,10 @@
 package Presentacion;
 
+import Errors.DataError;
+import Errors.LogicError;
 import Modelos.Festivos;
 import Logica.Xml_Logica;
+import Modelos.AlertsConfig;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -108,21 +111,29 @@ public class PrimaryController implements Initializable {
 
     @FXML
     void limpiarTabla(ActionEvent event) {
-        intxtNom.clear();
-        chbxAmbit.setValue("Cap");
-        intxtMunicipi.clear();
-        intxtLocalitat.clear();
-        nombreFiesta.setValue("Festa");
-        dpFirst.setValue(null);
-        dpSecond.setValue(null);
+        try {
 
-        tblView.setItems(xmlLogica.neteja(intxtNom.getText(), chbxAmbit.getValue(), intxtMunicipi.getText(), intxtLocalitat.getText(), nombreFiesta.getValue(), dpFirst.getValue(), dpSecond.getValue()));
+            intxtNom.clear();
+            chbxAmbit.setValue("Cap");
+            intxtMunicipi.clear();
+            intxtLocalitat.clear();
+            nombreFiesta.setValue("Festa");
+            dpFirst.setValue(null);
+            dpSecond.setValue(null);
+
+            tblView.setItems(xmlLogica.neteja(intxtNom.getText(), chbxAmbit.getValue(), intxtMunicipi.getText(), intxtLocalitat.getText(), nombreFiesta.getValue(), dpFirst.getValue(), dpSecond.getValue()));
+
+        } catch (LogicError e) {
+            e.printStackTrace();
+
+        }
     }
 
     @FXML
     void exportarArchivo(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../export.fxml"));
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("export.fxml"));
             Parent root = loader.load();
             ExportController controller = loader.getController();
             Scene scene = new Scene(root);
@@ -141,16 +152,21 @@ public class PrimaryController implements Initializable {
 
     @FXML
     void cercaDades(ActionEvent event) {
+        try {
+            tblView.setItems(
+                    xmlLogica.checkTable(
+                            intxtNom.getText(),
+                            chbxAmbit.getValue(),
+                            intxtMunicipi.getText(),
+                            intxtLocalitat.getText(),
+                            nombreFiesta.getValue(),
+                            dpFirst.getValue(),
+                            dpSecond.getValue()));
 
-        tblView.setItems(
-                xmlLogica.checkTable(
-                        intxtNom.getText(),
-                        chbxAmbit.getValue(),
-                        intxtMunicipi.getText(),
-                        intxtLocalitat.getText(),
-                        nombreFiesta.getValue(),
-                        dpFirst.getValue(),
-                        dpSecond.getValue()));
+        } catch (LogicError e) {
+            alert.mostrarAlerta(e.getMessage());
+
+        }
 
         tblView.refresh();
 
@@ -158,12 +174,19 @@ public class PrimaryController implements Initializable {
 
     @FXML
     void importarFichero(ActionEvent event) {
+        try {
+            tblView.setItems(
+                    xmlLogica.cargarFichero(btnmenu.getScene().getWindow()));
+            nombreFiesta.getItems().addAll(xmlLogica.fiestas());
+        } catch (LogicError e) {
+            
+            alert.mostrarError(e.getMessage());
 
-        tblView.setItems(
-                xmlLogica.cargarFichero(btnmenu.getScene().getWindow()));
-        nombreFiesta.getItems().addAll(xmlLogica.fiestas());
+        }
 
     }
+
+    private AlertsConfig alert = new AlertsConfig();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
