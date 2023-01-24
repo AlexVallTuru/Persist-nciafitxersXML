@@ -2,6 +2,7 @@ package com.m06uf1practa.m06uf1practa.Presentacion;
 
 import com.m06uf1practa.m06uf1practa.Modelos.Festivos;
 import com.m06uf1practa.m06uf1practa.Logica.Xml_Logica;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -29,6 +30,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class PrimaryController implements Initializable {
 
@@ -121,19 +123,31 @@ public class PrimaryController implements Initializable {
     @FXML
     void exportarArchivo(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("com.m06uf1practa.m06uf1practa.export.fxml"));
+            //Llamar al controller para exportar la información
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../export.fxml"));
             Parent root = loader.load();
             ExportController controller = loader.getController();
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(scene);
-            stage.showAndWait();
-
-        } catch (Exception e) {
+            stage.show();
+            
+        } catch (IOException e) {
 
         }
-
+    }
+    
+    /**
+     * Envia els continguts del TableView a l'ExportController
+     * 
+     * @return ObservableList
+     */
+    public ObservableList<Festivos> exportDadesView(){
+        //Obtener información del table view
+        ObservableList<Festivos> items = tblView.getItems();
+        return items;
     }
 
     @FXML
