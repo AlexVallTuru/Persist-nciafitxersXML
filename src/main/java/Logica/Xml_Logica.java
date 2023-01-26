@@ -61,15 +61,15 @@ public class Xml_Logica implements XMLLogicInterface {
 
         } catch (DataError e) {
             throw new LogicError(e.getMessage());
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
             throw new LogicError("El fichero no es valido");
         }
         return null;
 
     }
 
-    public ObservableList<Festivos> cercaDades(String nom, String ambit, String localitat, String municipi, String nombreFiesta, LocalDate d1, LocalDate d2) throws LogicError {
-
+    public ObservableList<Festivos> cercaDades(String nom, 
+            String ambit, String localitat, String municipi, String nombreFiesta, LocalDate d1, LocalDate d2) throws LogicError {
 
         try {
             /**
@@ -187,6 +187,7 @@ public class Xml_Logica implements XMLLogicInterface {
 
     public ObservableList<Festivos> checkTable(String nombre, String ambit, String municipio, String localitat, String nombreFiesta, LocalDate d1, LocalDate d2) throws LogicError {
         try {
+
             if (nombre.isEmpty()
                     && ambit.equals("Cap")
                     && municipio.isEmpty()
@@ -205,23 +206,23 @@ public class Xml_Logica implements XMLLogicInterface {
 
     }
 
-    public ObservableList<Festivos> neteja(String nombre, String ambit, String municipio, String localitat, String nombreFiesta, LocalDate d1, LocalDate d2) throws LogicError{
-        try{
+    public ObservableList<Festivos> neteja(String nombre, String ambit, String municipio, String localitat, String nombreFiesta, LocalDate d1, LocalDate d2) throws LogicError {
+        try {
             if (nombre.isEmpty()
-                && ambit.equals("Cap")
-                && municipio.isEmpty()
-                && localitat.isEmpty()
-                && nombreFiesta.equals("Festa")
-                && d1 == null
-                && d2 == null) {
-            return datos.leerFichero(file);
-        }
-        return null;
-            
-        }catch(DataError e){
+                    && ambit.equals("Cap")
+                    && municipio.isEmpty()
+                    && localitat.isEmpty()
+                    && nombreFiesta.equals("Festa")
+                    && d1 == null
+                    && d2 == null) {
+                return datos.leerFichero(file);
+            }
+            return null;
+
+        } catch (DataError e) {
             throw new LogicError(e.getMessage());
         }
-        
+
     }
 
     public Set<String> fiestas() {

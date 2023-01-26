@@ -21,6 +21,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import nu.xom.Builder;
@@ -243,6 +244,10 @@ public class XMLData implements XMLDataInterface {
 
     public SortedSet<String> fiestas() {
         return this.nombreFiestas;
+    }
+    
+    public ObservableList<Festivos> tableView(){
+        return festivos;
     }
 
 }
