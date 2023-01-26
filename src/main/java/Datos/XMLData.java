@@ -2,12 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.m06uf1practa.m06uf1practa.Datos;
+package Datos;
 
-import com.m06uf1practa.m06uf1practa.Modelos.Festivos;
-import com.m06uf1practa.m06uf1practa.Interface.XMLDataInterface;
-import com.m06uf1practa.m06uf1practa.Utils.Utils;
+import Errors.DataError;
+import Modelos.Festivos;
+import Interface.XMLDataInterface;
+import Utils.Utils;
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,12 +21,14 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import nu.xom.Builder;
 import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Elements;
+import nu.xom.ParsingException;
 
 /**
  *
@@ -35,7 +39,7 @@ public class XMLData implements XMLDataInterface {
     private ObservableList<Festivos> festivos;
     private ObservableList<Festivos> resultados;
     private SortedSet<String> nombreFiestas;
-    
+
     @Override
     public void ImportarDocumento() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -47,7 +51,7 @@ public class XMLData implements XMLDataInterface {
     }
 
     @Override
-    public ObservableList<Festivos> FiltrarPorNombre(String nombre) {
+    public ObservableList<Festivos> FiltrarPorNombre(String nombre) throws DataError {
         resultados = FXCollections.observableArrayList();
         for (Festivos valor : festivos) {
 
@@ -56,12 +60,15 @@ public class XMLData implements XMLDataInterface {
 
             }
         }
-        System.out.println(resultados);
-        return resultados;
+        if (resultados.isEmpty()) {
+            throw new DataError(String.format("%s no existe en el documento", nombre));
+        } else {
+            return resultados;
+        }
     }
-    
+
     @Override
-    public ObservableList<Festivos> FiltrarPorMunicipio(String municipio) {
+    public ObservableList<Festivos> FiltrarPorMunicipio(String municipio) throws DataError {
         resultados = FXCollections.observableArrayList();
         for (Festivos valor : festivos) {
 
@@ -70,13 +77,16 @@ public class XMLData implements XMLDataInterface {
 
             }
         }
-        System.out.println(resultados);
-        return resultados;
+        if (resultados.isEmpty()) {
+            throw new DataError(String.format("%s no existe en el documento", municipio));
+        } else {
+            return resultados;
+        }
     }
 
     @Override
-    public ObservableList<Festivos> FiltrarPorFechas(LocalDate d1, LocalDate d2) {
-      resultados = FXCollections.observableArrayList();
+    public ObservableList<Festivos> FiltrarPorFechas(LocalDate d1, LocalDate d2) throws DataError {
+        resultados = FXCollections.observableArrayList();
         for (Festivos valor : festivos) {
 
             if (valor.getFecha().isAfter(d1) && valor.getFecha().isBefore(d2)) {
@@ -84,11 +94,15 @@ public class XMLData implements XMLDataInterface {
 
             }
         }
-        System.out.println(resultados);
-        return resultados; }
+        if (resultados.isEmpty()) {
+            throw new DataError(String.format("No se han encontrado fiestas entre %s y %s", d1.toString(), d2.toString()));
+        } else {
+            return resultados;
+        }
+    }
 
     @Override
-    public ObservableList<Festivos> FiltrarPorAmbito(String ambit) {
+    public ObservableList<Festivos> FiltrarPorAmbito(String ambit) throws DataError {
         resultados = FXCollections.observableArrayList();
         for (Festivos valor : festivos) {
 
@@ -97,13 +111,16 @@ public class XMLData implements XMLDataInterface {
 
             }
         }
-        System.out.println(resultados);
-        return resultados;
+        if (resultados.isEmpty()) {
+            throw new DataError(String.format("%s no existe en el documento", ambit));
+        } else {
+            return resultados;
+        }
 
     }
 
     @Override
-    public ObservableList<Festivos> FiltrarPorFiesta(String fiesta) {
+    public ObservableList<Festivos> FiltrarPorFiesta(String fiesta) throws DataError {
         resultados = FXCollections.observableArrayList();
         for (Festivos valor : festivos) {
 
@@ -112,12 +129,15 @@ public class XMLData implements XMLDataInterface {
 
             }
         }
-        System.out.println(resultados);
-        return resultados;
+        if (resultados.isEmpty()) {
+            throw new DataError(String.format("%s no existe en el documento", fiesta));
+        } else {
+            return resultados;
+        }
     }
-    
+
     @Override
-    public ObservableList<Festivos> FiltrarPorLocalidad(String localidad) {
+    public ObservableList<Festivos> FiltrarPorLocalidad(String localidad) throws DataError {
         resultados = FXCollections.observableArrayList();
         for (Festivos valor : festivos) {
 
@@ -126,13 +146,17 @@ public class XMLData implements XMLDataInterface {
 
             }
         }
-        System.out.println(resultados);
-        return resultados;
+        if (resultados.isEmpty()) {
+            throw new DataError(String.format("%s no existe en el documento", localidad));
+        } else {
+            return resultados;
+        }
 
     }
 
     @Override
-    public File cargarFichero(Window window) {
+    public File cargarFichero(Window window) throws DataError {
+
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open XML File");
         fileChooser.getExtensionFilters().addAll(
@@ -143,19 +167,18 @@ public class XMLData implements XMLDataInterface {
         if (selectedFile != null) {
             String fileName = selectedFile.getName();
             if (fileName.endsWith(".xml")) {
-                System.out.println("El archivo es valido");
+
                 return selectedFile;
             } else {
-                System.out.println("El archivo no es valido");
+                throw new DataError(String.format("El archivo %s no es valido", fileName));
+
             }
-        } else {
-            System.out.println("Se ha cancelado la carga de archivo");
         }
-        return null;
+        throw new DataError("El fichero no es valido");
     }
 
-    public ObservableList<Festivos> FiltradoCompleto(String nom, String ambit, String localitat, String municipi, String nombreFiesta,LocalDate d1,LocalDate d2) {
-        
+    public ObservableList<Festivos> FiltradoCompleto(String nom, String ambit, String localitat, String municipi, String nombreFiesta, LocalDate d1, LocalDate d2) throws DataError {
+
         resultados = FXCollections.observableArrayList();
         for (Festivos valor : festivos) {
 
@@ -169,12 +192,16 @@ public class XMLData implements XMLDataInterface {
 
             }
         }
-        System.out.println(resultados);
-        return resultados;
+
+        if (resultados.isEmpty()) {
+            throw new DataError("No se han encontrado resultados");
+        } else {
+            return resultados;
+        }
 
     }
 
-    public ObservableList<Festivos> leerFichero(File fichero) {
+    public ObservableList<Festivos> leerFichero(File fichero) throws DataError {
         festivos = FXCollections.observableArrayList();
         nombreFiestas = new TreeSet<>();
         Utils utils = new Utils();
@@ -204,16 +231,23 @@ public class XMLData implements XMLDataInterface {
                 festivos.add(new Festivos(illaValue, mbitValue, municipiValue, localitatValue, utils.convertLocalDate(dataValue), utils.capitalizeName(nom_festaValue)));
 
             }
-            
+
             return festivos;
-        } catch (Exception e) {
-            e.printStackTrace();
+
+        } catch (ParsingException e) {
+            throw new DataError("Error al leer el documento");
+        } catch (IOException e) {
+            throw new DataError("juju");
         }
-        return null;
+
     }
 
     public SortedSet<String> fiestas() {
         return this.nombreFiestas;
+    }
+    
+    public ObservableList<Festivos> tableView(){
+        return festivos;
     }
 
 }

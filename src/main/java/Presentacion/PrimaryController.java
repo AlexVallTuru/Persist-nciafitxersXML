@@ -1,7 +1,10 @@
-package com.m06uf1practa.m06uf1practa.Presentacion;
+package Presentacion;
 
-import com.m06uf1practa.m06uf1practa.Modelos.Festivos;
-import com.m06uf1practa.m06uf1practa.Logica.Xml_Logica;
+import Errors.DataError;
+import Errors.LogicError;
+import Modelos.Festivos;
+import Logica.Xml_Logica;
+import Modelos.AlertsConfig;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -109,15 +112,22 @@ public class PrimaryController implements Initializable {
 
     @FXML
     void limpiarTabla(ActionEvent event) {
-        intxtNom.clear();
-        chbxAmbit.setValue("Cap");
-        intxtMunicipi.clear();
-        intxtLocalitat.clear();
-        nombreFiesta.setValue("Festa");
-        dpFirst.setValue(null);
-        dpSecond.setValue(null);
+        try {
 
-        tblView.setItems(xmlLogica.neteja(intxtNom.getText(), chbxAmbit.getValue(), intxtMunicipi.getText(), intxtLocalitat.getText(), nombreFiesta.getValue(), dpFirst.getValue(), dpSecond.getValue()));
+            intxtNom.clear();
+            chbxAmbit.setValue("Cap");
+            intxtMunicipi.clear();
+            intxtLocalitat.clear();
+            nombreFiesta.setValue("Festa");
+            dpFirst.setValue(null);
+            dpSecond.setValue(null);
+
+            tblView.setItems(xmlLogica.neteja(intxtNom.getText(), chbxAmbit.getValue(), intxtMunicipi.getText(), intxtLocalitat.getText(), nombreFiesta.getValue(), dpFirst.getValue(), dpSecond.getValue()));
+
+        } catch (LogicError e) {
+            e.printStackTrace();
+
+        }
     }
 
     @FXML
@@ -152,31 +162,41 @@ public class PrimaryController implements Initializable {
 
     @FXML
     void cercaDades(ActionEvent event) {
-        System.out.println(dpFirst.getValue());
-        /*if (!intxtNom.getText().isEmpty()
-                && !intxtMunicipi.getText().isEmpty()
-                && !intxtLocalitat.getText().isEmpty()
-                && !chbxAmbit.getValue().equals("Cap")
-                && !intxtMunicipi.getText().isEmpty()
-                && !dpFirst.getValue().toString().isEmpty()
-                && !dpSecond.getValue().toString().isEmpty()) {
-            tblView.setItems(xmlLogica.cercaDades(intxtNom.getText(), chbxAmbit.getValue(),
-                    intxtLocalitat.getText(), intxtMunicipi.getText(), nombreFiesta.getValue(), dpFirst.getValue(), dpSecond.getValue()));
+        try {
+            tblView.setItems(
+                    xmlLogica.checkTable(
+                            intxtNom.getText(),
+                            chbxAmbit.getValue(),
+                            intxtMunicipi.getText(),
+                            intxtLocalitat.getText(),
+                            nombreFiesta.getValue(),
+                            dpFirst.getValue(),
+                            dpSecond.getValue()));
 
-        } else {*/
-        tblView.setItems(xmlLogica.checkTable(intxtNom.getText(), chbxAmbit.getValue(), intxtMunicipi.getText(), intxtLocalitat.getText(), nombreFiesta.getValue(), dpFirst.getValue(), dpSecond.getValue()));
-        //}
+        } catch (LogicError e) {
+            alert.mostrarAlerta(e.getMessage());
+
+        }
+
         tblView.refresh();
 
     }
 
     @FXML
     void importarFichero(ActionEvent event) {
+        try {
+            tblView.setItems(
+                    xmlLogica.cargarFichero(btnmenu.getScene().getWindow()));
+            nombreFiesta.getItems().addAll(xmlLogica.fiestas());
+        } catch (LogicError e) {
+            
+            alert.mostrarError(e.getMessage());
 
-        tblView.setItems(xmlLogica.cargarFichero(btnmenu.getScene().getWindow()));
-        nombreFiesta.getItems().addAll(xmlLogica.fiestas());
+        }
 
     }
+
+    private AlertsConfig alert = new AlertsConfig();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

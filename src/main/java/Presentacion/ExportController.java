@@ -1,4 +1,4 @@
-package com.m06uf1practa.m06uf1practa.Presentacion;
+package Presentacion;
 
 import com.m06uf1practa.m06uf1practa.Logica.Xml_Logica;
 import com.m06uf1practa.m06uf1practa.Modelos.Festivos;

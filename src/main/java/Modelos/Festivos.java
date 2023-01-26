@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.m06uf1practa.m06uf1practa.Modelos;
+package Modelos;
 
 import java.time.LocalDate;
 
