@@ -1,7 +1,8 @@
 package Presentacion;
 
-import com.m06uf1practa.m06uf1practa.Logica.Xml_Logica;
-import com.m06uf1practa.m06uf1practa.Modelos.Festivos;
+import Logica.Xml_Logica;
+import Modelos.Festivos;
+import Modelos.AlertsConfig;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -20,6 +21,7 @@ public class ExportController {
     
     Xml_Logica xmlLogica = new Xml_Logica();
     PrimaryController primary = new PrimaryController();
+    AlertsConfig alert = new AlertsConfig();
     
     final static String USERHOME = System.getProperty("user.home");
 
@@ -44,9 +46,9 @@ public class ExportController {
     @FXML
     void exportFile(MouseEvent event) {
         if (filename.getText().equals("")) {
-            
+            alert.mostrarError("El nom del fitxer no pot ser buit.");
         } else if (passwordFile.getText().equals("")) {
-            
+            alert.mostrarError("La contrasenya del fitxer no pot ser buida.");
         } else {
                 //Obtenir les dades per exportar
                 ObservableList<Festivos> export = primary.exportDadesView();
@@ -88,16 +90,24 @@ public class ExportController {
                 //Creacio del document
                 Document doc = new Document(root);
                 
-            try {
+            try { //Generem i guardem el fitxer
                 
-                String nouXml = USERHOME + File.separator + filename.getText();//Creació del fitxer
-                // Encriptació d'Àlex
-
-                FileWriter fitxer = new FileWriter(new File(nouXml),false); //Obrim fitxer per escriure
+                File fitxer = new File(USERHOME, filename.getText()); //Instanciem objecte de tipus file
+                //Creem el fitxer dins del sistema
+                if (fitxer.createNewFile()) { //Si el fitxer s'ha creat...
+                    System.out.println("El fitxer " + fitxer + " s'ha creat correctament.");
+                } else { //Si el fitxer no s'ha creat perquè ja existeix
+                    alert.mostrarError("Ja existeix un fitxer amb el mateix nom.");
+                }
                 
-
+                FileWriter fitxerW = new FileWriter(fitxer); //Obrim fitxer per escriure.
+                fitxerW.write(doc.toXML()); //Escrivim contingut doc (transformat a String) en fitxer
+                //Encriptació Àlex
+                
+                fitxerW.close(); //Tanquem fitxer
+                    
             } catch (IOException e) {
-                
+                alert.mostrarError("Error creant el fitxer: " + e);
             }
         }
     }

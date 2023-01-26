@@ -134,7 +134,7 @@ public class PrimaryController implements Initializable {
     void exportarArchivo(ActionEvent event) {
         try {
             //Llamar al controller para exportar la información
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../export.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("export.fxml"));
             Parent root = loader.load();
             ExportController controller = loader.getController();
             Scene scene = new Scene(root);
