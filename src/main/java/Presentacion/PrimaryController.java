@@ -105,6 +105,9 @@ public class PrimaryController implements Initializable {
     private ChoiceBox<String> nombreFiesta;
 
     @FXML
+    private MenuItem informe;
+
+    @FXML
     void closeApp(MouseEvent event) {
         Platform.exit();
     }
@@ -178,10 +181,54 @@ public class PrimaryController implements Initializable {
             tblView.setItems(
                     xmlLogica.cargarFichero(btnmenu.getScene().getWindow()));
             nombreFiesta.getItems().addAll(xmlLogica.fiestas());
+
         } catch (LogicError e) {
-            
+
             alert.mostrarError(e.getMessage());
 
+        }
+
+    }
+
+    @FXML
+    void informeGrafica(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("entreFechas.fxml"));
+            Parent root = loader.load();
+            EntreFechasController controller = loader.getController();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(scene);
+            controller.recogerDatos(xmlLogica.generarInforme());
+            stage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @FXML
+    private MenuItem grafica;
+
+    @FXML
+    void verInforme(ActionEvent event) {
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("informe.fxml"));
+            Parent root = loader.load();
+            InformeController controller = loader.getController();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(scene);
+            controller.setTable(xmlLogica.generarInforme());
+            stage.showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }

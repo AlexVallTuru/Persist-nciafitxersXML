@@ -10,6 +10,7 @@ import Modelos.Festivos;
 import Datos.XMLData;
 import Errors.DataError;
 import Errors.LogicError;
+import Modelos.InformeFiestas;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.Set;
@@ -227,6 +228,17 @@ public class Xml_Logica implements XMLLogicInterface {
 
     public Set<String> fiestas() {
         return datos.fiestas();
+    }
+
+    public ObservableList<InformeFiestas> generarInforme() {
+        
+        try{
+            return datos.generaInforme();
+        }catch(Exception e){
+            e.printStackTrace();
+            
+        }
+        return null;
     }
 
 }

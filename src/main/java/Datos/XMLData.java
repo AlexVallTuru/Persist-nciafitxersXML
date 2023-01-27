@@ -7,6 +7,8 @@ package Datos;
 import Errors.DataError;
 import Modelos.Festivos;
 import Interface.XMLDataInterface;
+import Modelos.InformeFiestas;
+import Presentacion.InformeController;
 import Utils.Utils;
 import java.io.File;
 import java.io.IOException;
@@ -39,6 +41,11 @@ public class XMLData implements XMLDataInterface {
     private ObservableList<Festivos> festivos;
     private ObservableList<Festivos> resultados;
     private SortedSet<String> nombreFiestas;
+    private Set<String> nombreIsla;
+
+    public XMLData() {
+        this.nombreIsla = new HashSet<>();
+    }
 
     @Override
     public void ImportarDocumento() {
@@ -228,6 +235,7 @@ public class XMLData implements XMLDataInterface {
                 String nom_festaValue = nom_festa.getValue();
 
                 nombreFiestas.add(utils.capitalizeName(nom_festaValue));
+                nombreIsla.add(illaValue);
                 festivos.add(new Festivos(illaValue, mbitValue, municipiValue, localitatValue, utils.convertLocalDate(dataValue), utils.capitalizeName(nom_festaValue)));
 
             }
@@ -245,9 +253,33 @@ public class XMLData implements XMLDataInterface {
     public SortedSet<String> fiestas() {
         return this.nombreFiestas;
     }
-    
-    public ObservableList<Festivos> tableView(){
+
+    public ObservableList<Festivos> tableView() {
         return festivos;
     }
 
+    public ObservableList<InformeFiestas> generaInforme() {
+        ObservableList<InformeFiestas> informe = FXCollections.observableArrayList();
+        Set<String> nombres = new HashSet<String>();
+        
+        for(Festivos festivo : festivos){
+            nombres.add(festivo.getNombreIsla());
+        }
+        
+        for(String nombre : nombres){
+            int count = 0;
+            for (int i = 0; i <festivos.size(); i++) {
+                if(festivos.get(i).getNombreIsla().equals(nombre)){
+                    count++;
+                }
+                
+            }
+            informe.add(new InformeFiestas(nombre,count));
+        }
+        
+        return informe;
+
+    }
+    
+    
 }

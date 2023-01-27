@@ -36,7 +36,7 @@
             </Text>
             <ImageView fx:id="btnClose" fitHeight="26.0" fitWidth="59.0" layoutX="257.0" layoutY="1.0" onMouseClicked="#closeApp" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../images/close.png" />
+                  <Image url="@../images/close.png" />
                </image>
             </ImageView>
             <Button fx:id="neteja" layoutX="143.0" layoutY="478.0" mnemonicParsing="false" onAction="#limpiarTabla" text="Neteja" />
@@ -59,10 +59,12 @@
       </Pane>
       <MenuBar fx:id="btnmenu" prefHeight="26.0" prefWidth="639.0">
         <menus>
-          <Menu mnemonicParsing="false" text="Fitxer">
+          <Menu fx:id="fitxer" mnemonicParsing="false" text="Fitxer">
             <items>
                   <MenuItem fx:id="exportFile" mnemonicParsing="false" onAction="#exportarArchivo" text="Exportar" />
               <MenuItem fx:id="importFile" mnemonicParsing="false" onAction="#importarFichero" text="Importar" />
+                  <MenuItem fx:id="informe" mnemonicParsing="false" onAction="#verInforme" text="Informe" />
+                  <MenuItem fx:id="grafica" mnemonicParsing="false" onAction="#informeGrafica" text="Grafica" />
             </items>
           </Menu>
         </menus>
