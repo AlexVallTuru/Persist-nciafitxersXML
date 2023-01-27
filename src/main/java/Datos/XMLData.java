@@ -305,7 +305,7 @@ public class XMLData implements XMLDataInterface {
         } catch (ParsingException e) {
             throw new DataError("Error al leer el documento");
         } catch (IOException e) {
-            throw new DataError("juju");
+            throw new DataError("test");
         }
 
     }
