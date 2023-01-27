@@ -41,11 +41,6 @@ public class XMLData implements XMLDataInterface {
     private ObservableList<Festivos> festivos;
     private ObservableList<Festivos> resultados;
     private SortedSet<String> nombreFiestas;
-    private Set<String> nombreIsla;
-
-    public XMLData() {
-        this.nombreIsla = new HashSet<>();
-    }
 
     @Override
     public void ImportarDocumento() {
@@ -56,6 +51,13 @@ public class XMLData implements XMLDataInterface {
     public void ExportarDocumento() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
+    /**
+     * Filtrar datos por nombre de isla
+     * @param nombre
+     * @return
+     * @throws DataError 
+     */
 
     @Override
     public ObservableList<Festivos> FiltrarPorNombre(String nombre) throws DataError {
@@ -73,6 +75,13 @@ public class XMLData implements XMLDataInterface {
             return resultados;
         }
     }
+    
+    /**
+     * Filtra datos por municipio
+     * @param municipio
+     * @return
+     * @throws DataError 
+     */
 
     @Override
     public ObservableList<Festivos> FiltrarPorMunicipio(String municipio) throws DataError {
@@ -90,6 +99,14 @@ public class XMLData implements XMLDataInterface {
             return resultados;
         }
     }
+    
+    /**
+     * Filtrar datos entre 2 fechas
+     * @param d1
+     * @param d2
+     * @return
+     * @throws DataError 
+     */
 
     @Override
     public ObservableList<Festivos> FiltrarPorFechas(LocalDate d1, LocalDate d2) throws DataError {
@@ -107,6 +124,12 @@ public class XMLData implements XMLDataInterface {
             return resultados;
         }
     }
+    /**
+     * Filtrar datos por Ambito
+     * @param ambit
+     * @return
+     * @throws DataError 
+     */
 
     @Override
     public ObservableList<Festivos> FiltrarPorAmbito(String ambit) throws DataError {
@@ -125,6 +148,13 @@ public class XMLData implements XMLDataInterface {
         }
 
     }
+    
+    /**
+     * Filtrar datos por nombre de fiesta
+     * @param fiesta
+     * @return
+     * @throws DataError 
+     */
 
     @Override
     public ObservableList<Festivos> FiltrarPorFiesta(String fiesta) throws DataError {
@@ -142,7 +172,13 @@ public class XMLData implements XMLDataInterface {
             return resultados;
         }
     }
-
+    
+    /**
+     * Filtrar datos por localidad
+     * @param localidad
+     * @return
+     * @throws DataError 
+     */
     @Override
     public ObservableList<Festivos> FiltrarPorLocalidad(String localidad) throws DataError {
         resultados = FXCollections.observableArrayList();
@@ -161,6 +197,12 @@ public class XMLData implements XMLDataInterface {
 
     }
 
+    /**
+     * Cargar fichero
+     * @param window
+     * @return
+     * @throws DataError 
+     */
     @Override
     public File cargarFichero(Window window) throws DataError {
 
@@ -183,6 +225,19 @@ public class XMLData implements XMLDataInterface {
         }
         throw new DataError("El fichero no es valido");
     }
+    
+    /**
+     * Filtrar datos de manera completa
+     * @param nom
+     * @param ambit
+     * @param localitat
+     * @param municipi
+     * @param nombreFiesta
+     * @param d1
+     * @param d2
+     * @return
+     * @throws DataError 
+     */
 
     public ObservableList<Festivos> FiltradoCompleto(String nom, String ambit, String localitat, String municipi, String nombreFiesta, LocalDate d1, LocalDate d2) throws DataError {
 
@@ -208,6 +263,12 @@ public class XMLData implements XMLDataInterface {
 
     }
 
+    /**
+     * Leer fichero y almacenar sus valores
+     * @param fichero
+     * @return
+     * @throws DataError 
+     */
     public ObservableList<Festivos> leerFichero(File fichero) throws DataError {
         festivos = FXCollections.observableArrayList();
         nombreFiestas = new TreeSet<>();
@@ -235,7 +296,6 @@ public class XMLData implements XMLDataInterface {
                 String nom_festaValue = nom_festa.getValue();
 
                 nombreFiestas.add(utils.capitalizeName(nom_festaValue));
-                nombreIsla.add(illaValue);
                 festivos.add(new Festivos(illaValue, mbitValue, municipiValue, localitatValue, utils.convertLocalDate(dataValue), utils.capitalizeName(nom_festaValue)));
 
             }
@@ -249,15 +309,19 @@ public class XMLData implements XMLDataInterface {
         }
 
     }
+    /**
+     * Ordenar fiestas alfabeticamente
+     * @return 
+     */
 
     public SortedSet<String> fiestas() {
         return this.nombreFiestas;
     }
 
-    public ObservableList<Festivos> tableView() {
-        return festivos;
-    }
-
+    /**
+     * Generar informe almacenando nombre de isla y contador
+     * @return 
+     */
     public ObservableList<InformeFiestas> generaInforme() {
         ObservableList<InformeFiestas> informe = FXCollections.observableArrayList();
         Set<String> nombres = new HashSet<String>();
