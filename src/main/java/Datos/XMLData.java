@@ -7,8 +7,10 @@ package Datos;
 import Errors.DataError;
 import Modelos.Festivos;
 import Interface.XMLDataInterface;
+import Modelos.AlertsConfig;
 import Utils.Utils;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 import nu.xom.Builder;
 import nu.xom.Document;
@@ -39,15 +42,46 @@ public class XMLData implements XMLDataInterface {
     private ObservableList<Festivos> festivos;
     private ObservableList<Festivos> resultados;
     private SortedSet<String> nombreFiestas;
+    AlertsConfig alert = new AlertsConfig();
 
     @Override
     public void ImportarDocumento() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    /**
+     * Obté el document preparat i l'exporta a un XML amb els parametres rebuts.
+     * 
+     * @param export
+     * @param USERHOME
+     * @param filename 
+     * @author Aitor
+     */
     @Override
-    public void ExportarDocumento() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void ExportarDocumento(Document export, String USERHOME, String filename) {
+        try {
+            
+            File fitxer = new File(USERHOME, filename + ".xml"); //Instanciem objecte de tipus file
+            //Creem el fitxer dins del sistema
+            if (fitxer.createNewFile()) { //Si el fitxer s'ha creat...
+                System.out.println("El fitxer " + fitxer + " s'ha creat correctament.");
+            } else { //Si el fitxer no s'ha creat perquè ja existeix
+                alert.mostrarError("Ja existeix un fitxer amb el mateix nom.");
+                //TODO Cancelar l'exportació si existeix un fitxer amb el mateix nom
+            }
+
+            FileWriter fitxerW = new FileWriter(fitxer); //Obrim fitxer per escriure.
+            fitxerW.write(export.toXML()); //Escrivim contingut doc (transformat a String) en fitxer
+            //Encriptació Àlex
+
+            fitxerW.close(); //Tanquem fitxer
+
+            alert.mostrarInfo("El fitxer " + filename
+                    + ".xml s'ha creat correctament.");
+
+        } catch (IOException e) {
+            alert.mostrarError("Error creant el fitxer: " + e);
+        }
     }
 
     @Override
@@ -245,8 +279,8 @@ public class XMLData implements XMLDataInterface {
     public SortedSet<String> fiestas() {
         return this.nombreFiestas;
     }
-    
-    public ObservableList<Festivos> tableView(){
+
+    public ObservableList<Festivos> tableView() {
         return festivos;
     }
 
