@@ -5,6 +5,7 @@ import Errors.LogicError;
 import Modelos.Festivos;
 import Logica.Xml_Logica;
 import Modelos.AlertsConfig;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -132,10 +133,16 @@ public class PrimaryController implements Initializable {
         }
     }
 
+    /**
+     * Obre la finestra d'exportació de dades i envia l'ObservableList.
+     * 
+     * @param event
+     * @author Aitor
+     */
     @FXML
     void exportarArchivo(ActionEvent event) {
         try {
-
+            //Llamar al controller para exportar la información
             FXMLLoader loader = new FXMLLoader(getClass().getResource("export.fxml"));
             Parent root = loader.load();
             ExportController controller = loader.getController();
@@ -144,13 +151,12 @@ public class PrimaryController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(scene);
-            stage.showAndWait();
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            controller.setInfo(tblView.getItems());
+            stage.show();
+            
+        } catch (IOException e) {
 
         }
-
     }
 
     @FXML

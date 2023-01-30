@@ -16,6 +16,8 @@ import java.time.LocalDate;
 import java.util.Set;
 import javafx.collections.ObservableList;
 import javafx.stage.Window;
+import nu.xom.Document;
+import nu.xom.Element;
 
 /**
  *
@@ -69,7 +71,58 @@ public class Xml_Logica implements XMLLogicInterface {
 
     }
 
-    public ObservableList<Festivos> cercaDades(String nom, 
+    /**
+     * Converteix les dades del ObservableList a un document preparat per exportar
+     * a un fitxer XML. També agafa els parametres USERHOME i filename per 
+     * enviar-los a la creació del fitxer.
+     * 
+     * @param export
+     * @param USERHOME
+     * @param filename 
+     * @author Aitor
+     */
+    public void exportaDades(ObservableList<Festivos> export, String USERHOME, String filename) {
+        Element root = new Element("row"); //Arrel
+        export.stream().map(list -> {
+            //Element pare
+            Element element = new Element("row");
+
+            //Elements fills
+            Element illa = new Element("illa");
+            Element ambit = new Element("mbit");
+            Element municipi = new Element("municipi");
+            Element localitat = new Element("localitat");
+            Element data = new Element("data");
+            Element nomFesta = new Element("nom_festa");
+
+            //Afegir valors als elements
+            illa.appendChild(list.getNombreIsla());
+            ambit.appendChild(list.getAmbito());
+            municipi.appendChild(list.getMunicipio());
+            localitat.appendChild(list.getLocalidad());
+            data.appendChild(list.getFecha().toString());
+            nomFesta.appendChild(list.getNombreFiesta());
+
+            //Posar tots els elements fills sota l'element pare
+            element.appendChild(illa);
+            element.appendChild(ambit);
+            element.appendChild(municipi);
+            element.appendChild(localitat);
+            element.appendChild(data);
+            element.appendChild(nomFesta);
+            return element;
+
+        }).forEachOrdered(element -> {
+            //Assignar l'element pare a l'element arrel
+            root.appendChild(element);
+        });
+
+        //Creacio del document
+        Document doc = new Document(root);
+        datos.ExportarDocumento(doc, USERHOME, filename);
+    }
+
+    public ObservableList<Festivos> cercaDades(String nom,
             String ambit, String localitat, String municipi, String nombreFiesta, LocalDate d1, LocalDate d2) throws LogicError {
 
         try {
