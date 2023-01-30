@@ -130,6 +130,12 @@ public class PrimaryController implements Initializable {
         }
     }
 
+    /**
+     * Obre la finestra d'exportació de dades i envia l'ObservableList.
+     * 
+     * @param event
+     * @author Aitor
+     */
     @FXML
     void exportarArchivo(ActionEvent event) {
         try {

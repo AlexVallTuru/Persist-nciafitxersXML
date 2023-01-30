@@ -10,6 +10,7 @@ import java.io.File;
 import java.time.LocalDate;
 import javafx.collections.ObservableList;
 import javafx.stage.Window;
+import nu.xom.Document;
 
 /**
  *
@@ -19,7 +20,7 @@ public interface XMLDataInterface {
     
     public void ImportarDocumento();
     
-    public void ExportarDocumento();
+    public void ExportarDocumento(Document doc, String USERHOME, String filename);
     
     public ObservableList<Festivos> FiltrarPorNombre(String nombre) throws DataError;
     
