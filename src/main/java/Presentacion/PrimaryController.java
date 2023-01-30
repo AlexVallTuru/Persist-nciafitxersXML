@@ -142,22 +142,12 @@ public class PrimaryController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(scene);
+            controller.setInfo(tblView.getItems());
             stage.show();
             
         } catch (IOException e) {
 
         }
-    }
-    
-    /**
-     * Envia els continguts del TableView a l'ExportController
-     * 
-     * @return ObservableList
-     */
-    public ObservableList<Festivos> exportDadesView(){
-        //Obtener información del table view
-        ObservableList<Festivos> items = tblView.getItems();
-        return items;
     }
 
     @FXML

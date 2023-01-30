@@ -23,7 +23,8 @@ public class ExportController {
     PrimaryController primary = new PrimaryController();
     AlertsConfig alert = new AlertsConfig();
     
-    final static String USERHOME = System.getProperty("user.home");
+    final static String USERHOME = System.getProperty("user.home"); // Variable HOME de l'usuari
+    ObservableList<Festivos> export; // ObservableList emmagatzemat
 
     @FXML
     private Button btnExport;
@@ -50,12 +51,9 @@ public class ExportController {
         } else if (passwordFile.getText().equals("")) {
             alert.mostrarError("La contrasenya del fitxer no pot ser buida.");
         } else {
-                //Obtenir les dades per exportar
-                ObservableList<Festivos> export = primary.exportDadesView();
-                
                 //Exportar les dades a format XML
                 Element root = new Element("row"); //Arrel
-                for (Festivos list: export) {
+                export.stream().map(list -> {
                     //Element pare
                     Element element = new Element("row");
                     
@@ -82,17 +80,19 @@ public class ExportController {
                     element.appendChild(localitat);
                     element.appendChild(data);
                     element.appendChild(nomFesta);
+                    return element;
                     
+                }).forEachOrdered(element -> {
                     //Assignar l'element pare a l'element arrel
                     root.appendChild(element);
-                }
+                });
                 
                 //Creacio del document
                 Document doc = new Document(root);
                 
             try { //Generem i guardem el fitxer
                 
-                File fitxer = new File(USERHOME, filename.getText()); //Instanciem objecte de tipus file
+                File fitxer = new File(USERHOME, filename.getText() + ".xml"); //Instanciem objecte de tipus file
                 //Creem el fitxer dins del sistema
                 if (fitxer.createNewFile()) { //Si el fitxer s'ha creat...
                     System.out.println("El fitxer " + fitxer + " s'ha creat correctament.");
@@ -105,6 +105,11 @@ public class ExportController {
                 //Encriptació Àlex
                 
                 fitxerW.close(); //Tanquem fitxer
+                
+                alert.mostrarInfo("El fitxer " + filename.getText() 
+                        + ".xml s'ha creat correctament.");
+                Stage stage = (Stage) btnExportClose.getScene().getWindow();
+                stage.close();
                     
             } catch (IOException e) {
                 alert.mostrarError("Error creant el fitxer: " + e);
@@ -112,4 +117,7 @@ public class ExportController {
         }
     }
 
+    public void setInfo(ObservableList<Festivos> OLData) {
+        export = OLData;
+    }
 }
