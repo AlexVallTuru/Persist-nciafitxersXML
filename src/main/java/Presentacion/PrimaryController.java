@@ -1,16 +1,13 @@
 package Presentacion;
 
-import Errors.DataError;
 import Errors.LogicError;
 import Modelos.Festivos;
 import Logica.Xml_Logica;
 import Modelos.AlertsConfig;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +17,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
@@ -38,6 +34,9 @@ import javafx.stage.StageStyle;
 public class PrimaryController implements Initializable {
 
     Xml_Logica xmlLogica = new Xml_Logica();
+
+    @FXML
+    private MenuItem Localitats;
 
     @FXML
     private Button btnCerca;
@@ -114,6 +113,26 @@ public class PrimaryController implements Initializable {
     }
 
     @FXML
+    void localitatsInforme(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("InformeLocalidades.fxml"));
+            Parent root = loader.load();
+            InformeLocalidadesController controller = loader.getController();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(scene);
+            controller.recogerDatos(xmlLogica.informeLocalitats());
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @FXML
     void limpiarTabla(ActionEvent event) {
         try {
 
@@ -135,7 +154,7 @@ public class PrimaryController implements Initializable {
 
     /**
      * Obre la finestra d'exportació de dades i envia l'ObservableList.
-     * 
+     *
      * @param event
      * @author Aitor
      */
@@ -153,7 +172,7 @@ public class PrimaryController implements Initializable {
             stage.setScene(scene);
             controller.setInfo(tblView.getItems());
             stage.show();
-            
+
         } catch (IOException e) {
 
         }

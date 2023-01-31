@@ -9,6 +9,7 @@ import Modelos.Festivos;
 import Interface.XMLDataInterface;
 import Modelos.InformeFiestas;
 import Modelos.AlertsConfig;
+import Modelos.InformeLocalidades;
 import Utils.Utils;
 import java.io.File;
 import java.io.FileWriter;
@@ -37,6 +38,7 @@ public class XMLData implements XMLDataInterface {
     private ObservableList<Festivos> festivos;
     private ObservableList<Festivos> resultados;
     private SortedSet<String> nombreFiestas;
+    
     AlertsConfig alert = new AlertsConfig();
 
     @Override
@@ -370,6 +372,29 @@ public class XMLData implements XMLDataInterface {
                 
             }
             informe.add(new InformeFiestas(nombre,count));
+        }
+        
+        return informe;
+
+    }
+    
+        public ObservableList<InformeLocalidades> generaInformeLocalidades() {
+        ObservableList<InformeLocalidades> informe = FXCollections.observableArrayList();
+        Set<String> nombres = new HashSet<String>();
+        
+        for(Festivos festivo : festivos){
+            nombres.add(festivo.getLocalidad());
+        }
+        
+        for(String nombre : nombres){
+            int count = 0;
+            for (int i = 0; i <festivos.size(); i++) {
+                if(festivos.get(i).getLocalidad().equals(nombre)){
+                    count++;
+                }
+                
+            }
+            informe.add(new InformeLocalidades(nombre,count));
         }
         
         return informe;

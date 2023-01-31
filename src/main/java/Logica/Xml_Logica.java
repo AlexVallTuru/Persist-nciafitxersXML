@@ -72,13 +72,13 @@ public class Xml_Logica implements XMLLogicInterface {
     }
 
     /**
-     * Converteix les dades del ObservableList a un document preparat per exportar
-     * a un fitxer XML. També agafa els parametres USERHOME i filename per 
-     * enviar-los a la creació del fitxer.
-     * 
+     * Converteix les dades del ObservableList a un document preparat per
+     * exportar a un fitxer XML. També agafa els parametres USERHOME i filename
+     * per enviar-los a la creació del fitxer.
+     *
      * @param export
      * @param USERHOME
-     * @param filename 
+     * @param filename
      * @author Aitor
      */
     public void exportaDades(ObservableList<Festivos> export, String USERHOME, String filename) {
@@ -284,14 +284,25 @@ public class Xml_Logica implements XMLLogicInterface {
     }
 
     public ObservableList<InformeFiestas> generarInforme() {
-        
-        try{
+
+        try {
             return datos.generaInforme();
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            
+
         }
         return null;
+    }
+
+    public ObservableList informeLocalitats() {
+        try {
+            return datos.generaInformeLocalidades();
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return null;
+
     }
 
 }

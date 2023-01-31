@@ -65,6 +65,7 @@
               <MenuItem fx:id="importFile" mnemonicParsing="false" onAction="#importarFichero" text="Importar" />
                   <MenuItem fx:id="informe" mnemonicParsing="false" onAction="#verInforme" text="Informe" />
                   <MenuItem fx:id="grafica" mnemonicParsing="false" onAction="#informeGrafica" text="Grafica" />
+                  <MenuItem fx:id="Localitats" mnemonicParsing="false" onAction="#localitatsInforme" text="Localitats" />
             </items>
           </Menu>
         </menus>
