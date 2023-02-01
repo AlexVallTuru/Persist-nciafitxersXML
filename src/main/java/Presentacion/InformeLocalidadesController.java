@@ -9,15 +9,20 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 public class InformeLocalidadesController implements Initializable {
 
     @FXML
     private ImageView closeButton;
+    
+    @FXML
+    private ScrollBar scrollBar;
 
     @FXML
     private BarChart<String, Integer> grafica;
@@ -26,8 +31,16 @@ public class InformeLocalidadesController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         Image image = new Image("images\\close.png");
         closeButton.setImage(image);
+        //grafica.autosize();
+        scrollBar.setMin(0);
+        scrollBar.setMax(grafica.getXAxis().getWidth());
+        scrollBar.setValue(0);
+        scrollBar.maxProperty().bind(grafica.getXAxis().widthProperty());
+        //HBox hBox = new HBox();
+        //hBox.getChildren().addAll(grafica, scrollBar);
+        
     }
-
+    
     @FXML
     void close(MouseEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
@@ -35,11 +48,12 @@ public class InformeLocalidadesController implements Initializable {
     }
 
     public void recogerDatos(ObservableList<InformeLocalidades> informes) {
-        for (InformeLocalidades informe : informes) {
-
+        
+        for (int i=0 ; i<informes.size();i++) {
+            System.out.println(informes.get(i));
             XYChart.Series dataSeries1 = new XYChart.Series();
-            dataSeries1.setName(informe.getLocalidad());
-            dataSeries1.getData().add(new XYChart.Data(informe.getCantidad(),informe.getLocalidad()));
+            dataSeries1.setName(informes.get(i).getLocalidad());
+            dataSeries1.getData().add(new XYChart.Data(informes.get(i).getLocalidad(),informes.get(i).getCantidad()));
 
             grafica.getData().add(dataSeries1);
         }
