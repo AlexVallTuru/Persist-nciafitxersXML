@@ -72,19 +72,17 @@ public class Xml_Logica implements XMLLogicInterface {
     }
 
     /**
-     * Converteix les dades del ObservableList a un document preparat per
-     * exportar a un fitxer XML. També agafa els parametres USERHOME i filename
-     * per enviar-los a la creació del fitxer.
-     *
+     * Converteix les dades del ObservableList a un document preparat per exportar
+     * a un fitxer XML. També agafa els parametres USERHOME i filename per 
+     * enviar-los a la creació del fitxer.
+     * 
      * @param export
      * @param USERHOME
-     * @param filename
-     * @param window
+     * @param filename 
      * @author Aitor
      */
-    public void exportaDades(ObservableList<Festivos> export, String USERHOME, String filename, Window window) {
+    public void exportaDades(ObservableList<Festivos> export, String USERHOME, String filename) {
         Element root = new Element("row"); //Arrel
-        Element row = new Element("row"); //Sub-Arrel
         export.stream().map(list -> {
             //Element pare
             Element element = new Element("row");
@@ -113,16 +111,15 @@ public class Xml_Logica implements XMLLogicInterface {
             element.appendChild(data);
             element.appendChild(nomFesta);
             return element;
-        //Assignar l'element pare a l'element arrel
-        }).forEachOrdered(element -> {
 
-            row.appendChild(element);
+        }).forEachOrdered(element -> {
+            //Assignar l'element pare a l'element arrel
+            root.appendChild(element);
         });
-        root.appendChild(row);
 
         //Creacio del document
         Document doc = new Document(root);
-        datos.ExportarDocumento(doc, USERHOME, filename, window);
+        datos.ExportarDocumento(doc, USERHOME, filename);
     }
 
     public ObservableList<Festivos> cercaDades(String nom,
@@ -287,12 +284,12 @@ public class Xml_Logica implements XMLLogicInterface {
     }
 
     public ObservableList<InformeFiestas> generarInforme() {
-
-        try {
+        
+        try{
             return datos.generaInforme();
-        } catch (Exception e) {
+        }catch(Exception e){
             e.printStackTrace();
-
+            
         }
         return null;
     }

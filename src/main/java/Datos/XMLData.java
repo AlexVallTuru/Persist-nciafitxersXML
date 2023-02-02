@@ -13,7 +13,6 @@ import Utils.Utils;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,7 +20,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import nu.xom.Builder;
@@ -55,14 +53,10 @@ public class XMLData implements XMLDataInterface {
      * @author Aitor
      */
     @Override
-    public void ExportarDocumento(Document export, String USERHOME, String filename, Window window) {
+    public void ExportarDocumento(Document export, String USERHOME, String filename) {
         try {
-            //Demana el directori per guardar el fitxer
-            DirectoryChooser saveDirectory = new DirectoryChooser();
-            saveDirectory.setInitialDirectory(new File(USERHOME));
-            File selectedDirectory = saveDirectory.showDialog(window);
             
-            File fitxer = new File(selectedDirectory.toString(), filename + ".xml"); //Instanciem objecte de tipus file
+            File fitxer = new File(USERHOME, filename + ".xml"); //Instanciem objecte de tipus file
             //Creem el fitxer dins del sistema
             if (fitxer.createNewFile()) { //Si el fitxer s'ha creat...
                 System.out.println("El fitxer " + fitxer + " s'ha creat correctament.");
@@ -71,7 +65,7 @@ public class XMLData implements XMLDataInterface {
                 //TODO Cancelar l'exportació si existeix un fitxer amb el mateix nom
             }
 
-            FileWriter fitxerW = new FileWriter(fitxer, StandardCharsets.UTF_8); //Obrim fitxer per escriure.
+            FileWriter fitxerW = new FileWriter(fitxer); //Obrim fitxer per escriure.
             fitxerW.write(export.toXML()); //Escrivim contingut doc (transformat a String) en fitxer
             //Encriptació Àlex
 

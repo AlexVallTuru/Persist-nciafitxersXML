@@ -54,7 +54,7 @@ public class ExportController {
             alert.mostrarError("La contrasenya del fitxer no pot ser buida.");
         } else {
             //Crida a metodes d'exportació
-            xmlLogica.exportaDades(export, USERHOME, filename.getText(), btnExport.getScene().getWindow());
+            xmlLogica.exportaDades(export, USERHOME, filename.getText());
             //Tanca la finestra
             Stage stage = (Stage) btnExport.getScene().getWindow();
             stage.close();
