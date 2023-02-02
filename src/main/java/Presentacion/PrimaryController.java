@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
@@ -71,6 +72,9 @@ public class PrimaryController implements Initializable {
 
     @FXML
     private Button neteja;
+    
+    @FXML
+    private Menu informesMenu;
 
     @FXML
     private TextField intxtMunicipi;
@@ -207,7 +211,7 @@ public class PrimaryController implements Initializable {
             tblView.setItems(
                     xmlLogica.cargarFichero(btnmenu.getScene().getWindow()));
             nombreFiesta.getItems().addAll(xmlLogica.fiestas());
-
+            informesMenu.setVisible(true);
         } catch (LogicError e) {
 
             alert.mostrarError(e.getMessage());
@@ -274,7 +278,7 @@ public class PrimaryController implements Initializable {
     }
 
     public void initValues() {
-        
+        informesMenu.setVisible(false);
         Image image = new Image(utils.convertPath("images\\close.png"));
         tblView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tblView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);

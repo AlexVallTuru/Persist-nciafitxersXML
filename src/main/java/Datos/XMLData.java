@@ -252,7 +252,7 @@ public class XMLData implements XMLDataInterface {
 
             }
         }
-        throw new DataError("El fichero no es valido");
+        throw new DataError("No se ha seleccionado un fichero");
     }
     
     /**
