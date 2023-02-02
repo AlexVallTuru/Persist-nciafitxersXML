@@ -6,13 +6,14 @@ package Utils;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
 /**
  *
  * @author Carlos
  */
 public class Utils {
-
+    public enum OS{
+        WINDOWS,LINUX,MAC
+    }
     public LocalDate convertLocalDate(String fecha) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return LocalDate.parse(fecha, formatter);
@@ -27,8 +28,25 @@ public class Utils {
             return nueva_cadena;
         }
         return name;
+        
 
     }
+    
+    public String convertPath(String path){
+        String os = System.getProperty("os.name").toLowerCase();
+        
+        if(os.contains("win")){
+            return path.replace("/","\\" );
+        }
+        
+        if(os.contains("nix") || os.contains("nux") || os.contains("aix")){
+            return path.replace("\\","/" );
+        }
+        
+        return path;
+        
+    }
+        
     
 
 }

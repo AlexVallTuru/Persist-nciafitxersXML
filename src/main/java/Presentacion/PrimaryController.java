@@ -4,6 +4,7 @@ import Errors.LogicError;
 import Modelos.Festivos;
 import Logica.Xml_Logica;
 import Modelos.AlertsConfig;
+import Utils.Utils;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -34,7 +35,7 @@ import javafx.stage.StageStyle;
 public class PrimaryController implements Initializable {
 
     Xml_Logica xmlLogica = new Xml_Logica();
-
+    Utils utils = new Utils();
     @FXML
     private MenuItem Localitats;
 
@@ -273,7 +274,8 @@ public class PrimaryController implements Initializable {
     }
 
     public void initValues() {
-        Image image = new Image("images\\close.png");
+        
+        Image image = new Image(utils.convertPath("images\\close.png"));
         tblView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tblView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
         btnClose.setImage(image);

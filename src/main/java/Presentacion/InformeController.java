@@ -2,6 +2,7 @@ package Presentacion;
 
 import Logica.Xml_Logica;
 import Modelos.InformeFiestas;
+import Utils.Utils;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
@@ -18,7 +19,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 public class InformeController implements Initializable {
-
+    Utils utils = new Utils();
     Xml_Logica logica = new Xml_Logica();
     @FXML
     private TableColumn<InformeFiestas, Integer> cantidad;
@@ -38,7 +39,7 @@ public class InformeController implements Initializable {
         tabla.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
         cantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
         isla.setCellValueFactory(new PropertyValueFactory<>("nombreIsla"));
-        Image image = new Image("images\\close.png");
+        Image image = new Image(utils.convertPath("images\\close.png"));
         closeButton.setImage(image);
     }
 

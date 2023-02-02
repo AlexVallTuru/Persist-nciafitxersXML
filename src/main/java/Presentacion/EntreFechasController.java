@@ -1,6 +1,7 @@
 package Presentacion;
 
 import Modelos.InformeFiestas;
+import Utils.Utils;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
@@ -14,7 +15,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class EntreFechasController implements Initializable {
-
+    Utils utils = new Utils();
+            
     @FXML
     private ImageView closeButton;
 
@@ -23,7 +25,7 @@ public class EntreFechasController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Image image = new Image("images\\close.png");
+        Image image = new Image(utils.convertPath("images\\close.png"));
         closeButton.setImage(image);
     }
 
