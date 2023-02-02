@@ -20,7 +20,7 @@ public interface XMLDataInterface {
     
     public void ImportarDocumento();
     
-    public void ExportarDocumento(Document doc, String USERHOME, String filename);
+    public void ExportarDocumento(Document doc, String USERHOME, String filename, Window window);
     
     public ObservableList<Festivos> FiltrarPorNombre(String nombre) throws DataError;
     
