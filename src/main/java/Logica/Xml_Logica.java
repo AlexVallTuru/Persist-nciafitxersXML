@@ -79,10 +79,12 @@ public class Xml_Logica implements XMLLogicInterface {
      * @param export
      * @param USERHOME
      * @param filename
+     * @param window
      * @author Aitor
      */
-    public void exportaDades(ObservableList<Festivos> export, String USERHOME, String filename) {
+    public void exportaDades(ObservableList<Festivos> export, String USERHOME, String filename, Window window) {
         Element root = new Element("row"); //Arrel
+        Element row = new Element("row"); //Sub-Arrel
         export.stream().map(list -> {
             //Element pare
             Element element = new Element("row");
@@ -112,14 +114,15 @@ public class Xml_Logica implements XMLLogicInterface {
             element.appendChild(nomFesta);
             return element;
 
-        }).forEachOrdered(element -> {
             //Assignar l'element pare a l'element arrel
-            root.appendChild(element);
+        }).forEachOrdered(element -> {
+            row.appendChild(element);
         });
+        root.appendChild(row);
 
         //Creacio del document
         Document doc = new Document(root);
-        datos.ExportarDocumento(doc, USERHOME, filename);
+        datos.ExportarDocumento(doc, USERHOME, filename, window);
     }
 
     public ObservableList<Festivos> cercaDades(String nom,
