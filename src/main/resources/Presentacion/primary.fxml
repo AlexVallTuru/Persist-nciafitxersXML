@@ -63,9 +63,13 @@
             <items>
                   <MenuItem fx:id="exportFile" mnemonicParsing="false" onAction="#exportarArchivo" text="Exportar" />
               <MenuItem fx:id="importFile" mnemonicParsing="false" onAction="#importarFichero" text="Importar" />
-                  <MenuItem fx:id="informe" mnemonicParsing="false" onAction="#verInforme" text="Informe" />
-                  <MenuItem fx:id="grafica" mnemonicParsing="false" onAction="#informeGrafica" text="Grafica" />
-                  <MenuItem fx:id="Localitats" mnemonicParsing="false" onAction="#localitatsInforme" text="Localitats" />
+                  <Menu mnemonicParsing="false" text="Informes">
+                    <items>
+                        <MenuItem fx:id="Localitats" mnemonicParsing="false" onAction="#localitatsInforme" text="Localitats" />
+                        <MenuItem fx:id="grafica" mnemonicParsing="false" onAction="#informeGrafica" text="Grafica" />
+                        <MenuItem fx:id="informe" mnemonicParsing="false" onAction="#verInforme" text="Informe" />
+                    </items>
+                  </Menu>
             </items>
           </Menu>
         </menus>

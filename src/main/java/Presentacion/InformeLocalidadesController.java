@@ -22,9 +22,6 @@ public class InformeLocalidadesController implements Initializable {
     private ImageView closeButton;
     
     @FXML
-    private ScrollBar scrollBar;
-
-    @FXML
     private BarChart<String, Integer> grafica;
 
     @Override
@@ -32,12 +29,6 @@ public class InformeLocalidadesController implements Initializable {
         Image image = new Image("images\\close.png");
         closeButton.setImage(image);
         //grafica.autosize();
-        scrollBar.setMin(0);
-        scrollBar.setMax(grafica.getXAxis().getWidth());
-        scrollBar.setValue(0);
-        scrollBar.maxProperty().bind(grafica.getXAxis().widthProperty());
-        //HBox hBox = new HBox();
-        //hBox.getChildren().addAll(grafica, scrollBar);
         
     }
     
@@ -49,7 +40,7 @@ public class InformeLocalidadesController implements Initializable {
 
     public void recogerDatos(ObservableList<InformeLocalidades> informes) {
         
-        for (int i=0 ; i<informes.size();i++) {
+        for (int i=0 ; i<25;i++) {
             System.out.println(informes.get(i));
             XYChart.Series dataSeries1 = new XYChart.Series();
             dataSeries1.setName(informes.get(i).getLocalidad());

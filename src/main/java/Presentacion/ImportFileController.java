@@ -57,15 +57,15 @@ public class ImportFileController {
     @FXML
     void negar(ActionEvent event) {
         try {
-            
-               xmlLogica.cargarFichero(negar.getScene().getWindow());
-            
-           // nombreFiesta.getItems().addAll(xmlLogica.fiestas());
+
+            xmlLogica.cargarFichero(negar.getScene().getWindow());
+
+            // nombreFiesta.getItems().addAll(xmlLogica.fiestas());
         } catch (LogicError e) {
             e.printStackTrace();
             //alert.mostrarError(e.getMessage());
 
-        }  
+        }
 
     }
 

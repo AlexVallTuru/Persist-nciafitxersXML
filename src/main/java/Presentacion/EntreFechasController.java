@@ -6,10 +6,7 @@ import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,12 +14,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class EntreFechasController implements Initializable {
-
-    @FXML
-    private CategoryAxis categoria;
-
-    @FXML
-    private NumberAxis numeros;
 
     @FXML
     private ImageView closeButton;
