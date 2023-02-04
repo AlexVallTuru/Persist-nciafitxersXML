@@ -6,9 +6,8 @@ package Presentacion;
 
 import Errors.LogicError;
 import Logica.Xml_Logica;
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
+import Modelos.Festivos;
+import Modelos.Singleton;
 
 /**
  * FXML Controller class
@@ -25,9 +24,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import Presentacion.PrimaryController;
+import java.io.IOException;
+import java.util.List;
+import javafx.collections.ObservableList;
 
 public class ImportFileController {
 
+    private Festivos festivos;
+    private ObservableList<Festivos> festivosLista;
     Xml_Logica xmlLogica = new Xml_Logica();
     @FXML
     private Button confirmar;
@@ -48,25 +52,32 @@ public class ImportFileController {
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(scene);
             stage.showAndWait();
+            stage = (Stage) negar.getScene().getWindow();
+            stage.close();
         } catch (Exception e) {
             System.out.println(e);
         }
-
     }
 
     @FXML
-    void negar(ActionEvent event) {
-        try {
+    void negar(ActionEvent event) throws LogicError, IOException {
 
-            xmlLogica.cargarFichero(negar.getScene().getWindow());
-
-            // nombreFiesta.getItems().addAll(xmlLogica.fiestas());
-        } catch (LogicError e) {
-            e.printStackTrace();
-            //alert.mostrarError(e.getMessage());
-
-        }
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("primary.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        PrimaryController controller = loader.getController();
+        // Pasando la lista al controlador ImportEncryptedController
+        stage = (Stage) negar.getScene().getWindow();
+        stage.close();
+        setFestivos(festivosLista = xmlLogica.cargarFichero(negar.getScene().getWindow()));
 
     }
 
+    public void setFestivos(List<Festivos> festivos) {
+        Singleton singleton = Singleton.getInstance();
+        ObservableList<Festivos> listaFestivos = singleton.getListaFestivos();
+        listaFestivos.clear();
+        listaFestivos.addAll(festivos);
+    }
 }

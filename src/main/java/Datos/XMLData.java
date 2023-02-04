@@ -10,12 +10,17 @@ import Interface.XMLDataInterface;
 import Modelos.InformeFiestas;
 import Modelos.AlertsConfig;
 import Modelos.InformeLocalidades;
+import Modelos.Singleton;
 import Utils.Utils;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.time.LocalDate;
+import java.util.Base64;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
@@ -40,7 +45,7 @@ public class XMLData implements XMLDataInterface {
     private ObservableList<Festivos> festivos;
     private ObservableList<Festivos> resultados;
     private SortedSet<String> nombreFiestas;
-    
+
     AlertsConfig alert = new AlertsConfig();
 
     @Override
@@ -50,22 +55,21 @@ public class XMLData implements XMLDataInterface {
 
     /**
      * Obté el document preparat i l'exporta a un XML amb els parametres rebuts.
-     * 
+     *
      * @param export
      * @param USERHOME
-     * @param filename 
+     * @param filename
      * @author Aitor
      */
-    @Override
-    public void ExportarDocumento(Document export, String USERHOME, String filename, Window window) {
+    public void ExportarDocumento(String export, String USERHOME, String filename, Window window) {
         try {
             //Demana el directori per guardar el fitxer
             DirectoryChooser saveDirectory = new DirectoryChooser();
             saveDirectory.setInitialDirectory(new File(USERHOME));
             File selectedDirectory = saveDirectory.showDialog(window);
-            
+
             File fitxer = new File(selectedDirectory.toString(), filename + ".xml"); //Instanciem objecte de tipus file
-            
+
             //Creem el fitxer dins del sistema
             if (fitxer.createNewFile()) { //Si el fitxer s'ha creat...
                 System.out.println("El fitxer " + fitxer + " s'ha creat correctament.");
@@ -75,9 +79,7 @@ public class XMLData implements XMLDataInterface {
             }
 
             FileWriter fitxerW = new FileWriter(fitxer, StandardCharsets.UTF_8); //Obrim fitxer per escriure.
-            fitxerW.write(export.toXML()); //Escrivim contingut doc (transformat a String) en fitxer
-            //Encriptació Àlex
-
+            fitxerW.write(export); //Escrivim contingut doc (transformat a String) en fitxer
             fitxerW.close(); //Tanquem fitxer
 
             alert.mostrarInfo("El fitxer " + filename
@@ -87,14 +89,14 @@ public class XMLData implements XMLDataInterface {
             alert.mostrarError("Error creant el fitxer: " + e);
         }
     }
-    
+
     /**
      * Filtrar datos por nombre de isla
+     *
      * @param nombre
      * @return
-     * @throws DataError 
+     * @throws DataError
      */
-
     @Override
     public ObservableList<Festivos> FiltrarPorNombre(String nombre) throws DataError {
         resultados = FXCollections.observableArrayList();
@@ -111,14 +113,14 @@ public class XMLData implements XMLDataInterface {
             return resultados;
         }
     }
-    
+
     /**
      * Filtra datos por municipio
+     *
      * @param municipio
      * @return
-     * @throws DataError 
+     * @throws DataError
      */
-
     @Override
     public ObservableList<Festivos> FiltrarPorMunicipio(String municipio) throws DataError {
         resultados = FXCollections.observableArrayList();
@@ -135,15 +137,15 @@ public class XMLData implements XMLDataInterface {
             return resultados;
         }
     }
-    
+
     /**
      * Filtrar datos entre 2 fechas
+     *
      * @param d1
      * @param d2
      * @return
-     * @throws DataError 
+     * @throws DataError
      */
-
     @Override
     public ObservableList<Festivos> FiltrarPorFechas(LocalDate d1, LocalDate d2) throws DataError {
         resultados = FXCollections.observableArrayList();
@@ -160,13 +162,14 @@ public class XMLData implements XMLDataInterface {
             return resultados;
         }
     }
+
     /**
      * Filtrar datos por Ambito
+     *
      * @param ambit
      * @return
-     * @throws DataError 
+     * @throws DataError
      */
-
     @Override
     public ObservableList<Festivos> FiltrarPorAmbito(String ambit) throws DataError {
         resultados = FXCollections.observableArrayList();
@@ -184,14 +187,14 @@ public class XMLData implements XMLDataInterface {
         }
 
     }
-    
+
     /**
      * Filtrar datos por nombre de fiesta
+     *
      * @param fiesta
      * @return
-     * @throws DataError 
+     * @throws DataError
      */
-
     @Override
     public ObservableList<Festivos> FiltrarPorFiesta(String fiesta) throws DataError {
         resultados = FXCollections.observableArrayList();
@@ -208,12 +211,13 @@ public class XMLData implements XMLDataInterface {
             return resultados;
         }
     }
-    
+
     /**
      * Filtrar datos por localidad
+     *
      * @param localidad
      * @return
-     * @throws DataError 
+     * @throws DataError
      */
     @Override
     public ObservableList<Festivos> FiltrarPorLocalidad(String localidad) throws DataError {
@@ -235,9 +239,10 @@ public class XMLData implements XMLDataInterface {
 
     /**
      * Cargar fichero
+     *
      * @param window
      * @return
-     * @throws DataError 
+     * @throws DataError
      */
     @Override
     public File cargarFichero(Window window) throws DataError {
@@ -261,9 +266,10 @@ public class XMLData implements XMLDataInterface {
         }
         throw new DataError("No se ha seleccionado un fichero");
     }
-    
+
     /**
      * Filtrar datos de manera completa
+     *
      * @param nom
      * @param ambit
      * @param localitat
@@ -272,9 +278,8 @@ public class XMLData implements XMLDataInterface {
      * @param d1
      * @param d2
      * @return
-     * @throws DataError 
+     * @throws DataError
      */
-
     public ObservableList<Festivos> FiltradoCompleto(String nom, String ambit, String localitat, String municipi, String nombreFiesta, LocalDate d1, LocalDate d2) throws DataError {
 
         resultados = FXCollections.observableArrayList();
@@ -301,9 +306,10 @@ public class XMLData implements XMLDataInterface {
 
     /**
      * Leer fichero y almacenar sus valores
+     *
      * @param fichero
      * @return
-     * @throws DataError 
+     * @throws DataError
      */
     public ObservableList<Festivos> leerFichero(File fichero) throws DataError {
         festivos = FXCollections.observableArrayList();
@@ -345,11 +351,12 @@ public class XMLData implements XMLDataInterface {
         }
 
     }
+
     /**
      * Ordenar fiestas alfabeticamente
-     * @return 
+     *
+     * @return
      */
-
     public SortedSet<String> fiestas() {
         return this.nombreFiestas;
     }
@@ -360,53 +367,120 @@ public class XMLData implements XMLDataInterface {
 
     /**
      * Generar informe almacenando nombre de isla y contador
-     * @return 
+     *
+     * @return
      */
     public ObservableList<InformeFiestas> generaInforme() {
         ObservableList<InformeFiestas> informe = FXCollections.observableArrayList();
         Set<String> nombres = new HashSet<String>();
-        
-        for(Festivos festivo : festivos){
+
+        for (Festivos festivo : festivos) {
             nombres.add(festivo.getNombreIsla());
         }
-        
-        for(String nombre : nombres){
+
+        for (String nombre : nombres) {
             int count = 0;
-            for (int i = 0; i <festivos.size(); i++) {
-                if(festivos.get(i).getNombreIsla().equals(nombre)){
+            for (int i = 0; i < festivos.size(); i++) {
+                if (festivos.get(i).getNombreIsla().equals(nombre)) {
                     count++;
                 }
-                
+
             }
-            informe.add(new InformeFiestas(nombre,count));
+            informe.add(new InformeFiestas(nombre, count));
         }
-        
+
         return informe;
 
     }
-    
-        public ObservableList<InformeLocalidades> generaInformeLocalidades() {
+
+    public ObservableList<InformeLocalidades> generaInformeLocalidades() {
         ObservableList<InformeLocalidades> informe = FXCollections.observableArrayList();
         Set<String> nombres = new HashSet<String>();
-        
-        for(Festivos festivo : festivos){
+
+        for (Festivos festivo : festivos) {
             nombres.add(festivo.getLocalidad());
         }
-        
-        for(String nombre : nombres){
+
+        for (String nombre : nombres) {
             int count = 0;
-            for (int i = 0; i <festivos.size(); i++) {
-                if(festivos.get(i).getLocalidad().equals(nombre)){
+            for (int i = 0; i < festivos.size(); i++) {
+                if (festivos.get(i).getLocalidad().equals(nombre)) {
                     count++;
                 }
-                
+
             }
-            informe.add(new InformeLocalidades(nombre,count));
+            informe.add(new InformeLocalidades(nombre, count));
         }
-        
+
         return informe;
 
     }
-    
-    
+
+    public static String Encriptacion(String message, String key) {
+        byte[] messageBytes = message.getBytes(StandardCharsets.UTF_8);
+        byte[] keyBytes = key.getBytes(StandardCharsets.UTF_8);
+        byte[] result = new byte[messageBytes.length];
+
+        for (int i = 0; i < messageBytes.length; i++) {
+            result[i] = (byte) (messageBytes[i] ^ keyBytes[i % keyBytes.length]);
+        }
+
+        return Base64.getEncoder().encodeToString(result);
+    }
+
+    public static String Desencriptacion(String encodedMessage, String key) {
+        byte[] encodedMessageBytes = Base64.getDecoder().decode(encodedMessage);
+        byte[] keyBytes = key.getBytes(StandardCharsets.UTF_8);
+        byte[] result = new byte[encodedMessageBytes.length];
+
+        for (int i = 0; i < encodedMessageBytes.length; i++) {
+            result[i] = (byte) (encodedMessageBytes[i] ^ keyBytes[i % keyBytes.length]);
+        }
+        System.out.println(result);
+        return new String(result, StandardCharsets.UTF_8);
+    }
+
+    @Override
+    public void ExportarDocumento(Document doc, String USERHOME, String filename, Window window) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public File cargarFicheroEncriptado(Window window) throws DataError {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open XML File");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("XML Files", "*.xml")
+        );
+        File selectedFile = fileChooser.showOpenDialog(window);
+        String encriptedString = fileToString(selectedFile); 
+        String datoslimpios = Desencriptacion(encriptedString, Singleton.getContrasena());
+        try ( FileWriter fileWriter = new FileWriter(selectedFile)) {
+            fileWriter.write(datoslimpios);
+            System.out.println("El archivo se ha escrito correctamente");
+        } catch (IOException e) {
+            System.out.println("Ha ocurrido un error: " + e.getMessage());
+        }
+        System.out.println(selectedFile);
+        if (selectedFile != null) {
+            String fileName = selectedFile.getName();
+            if (fileName.endsWith(".xml")) {
+
+                return selectedFile;
+            } else {
+                throw new DataError(String.format("El archivo %s no es valido", fileName));
+
+            }
+        }
+        throw new DataError("No se ha seleccionado un fichero");
+    }
+
+  public static String fileToString(File selectedFile) {
+    try {
+      byte[] encoded = Files.readAllBytes(selectedFile.toPath());
+      return new String(encoded, StandardCharsets.UTF_8);
+    } catch (IOException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
 }

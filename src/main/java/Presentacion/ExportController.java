@@ -3,6 +3,7 @@ package Presentacion;
 import Logica.Xml_Logica;
 import Modelos.Festivos;
 import Modelos.AlertsConfig;
+import Modelos.Singleton;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,6 +15,7 @@ import javafx.stage.Stage;
 
 public class ExportController {
     
+    Singleton singleton = Singleton.getInstance();
     Xml_Logica xmlLogica = new Xml_Logica();
     PrimaryController primary = new PrimaryController();
     AlertsConfig alert = new AlertsConfig();
@@ -54,6 +56,7 @@ public class ExportController {
             alert.mostrarError("La contrasenya del fitxer no pot ser buida.");
         } else {
             //Crida a metodes d'exportació
+            singleton.setContrasena(passwordFile.getText());
             xmlLogica.exportaDades(export, USERHOME, filename.getText(), btnExport.getScene().getWindow());
             //Tanca la finestra
             Stage stage = (Stage) btnExport.getScene().getWindow();

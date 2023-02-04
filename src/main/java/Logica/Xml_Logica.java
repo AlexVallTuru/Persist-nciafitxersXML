@@ -11,7 +11,9 @@ import Datos.XMLData;
 import Errors.DataError;
 import Errors.LogicError;
 import Modelos.InformeFiestas;
+import Modelos.Singleton;
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Set;
 import javafx.collections.ObservableList;
@@ -25,6 +27,7 @@ import nu.xom.Element;
  */
 public class Xml_Logica implements XMLLogicInterface {
 
+    Singleton singleton = Singleton.getInstance();
     XMLData datos = new XMLData();
     Utils utils = new Utils();
     private ObservableList<Festivos> lis;
@@ -122,7 +125,10 @@ public class Xml_Logica implements XMLLogicInterface {
 
         //Creacio del document
         Document doc = new Document(root);
-        datos.ExportarDocumento(doc, USERHOME, filename, window);
+        String contenidoXml = doc.toXML();
+        String key = singleton.getContrasena();
+        contenidoXml = XMLData.Encriptacion(contenidoXml,key);
+        datos.ExportarDocumento(contenidoXml, USERHOME, filename, window);
     }
 
     public ObservableList<Festivos> cercaDades(String nom,
@@ -306,6 +312,20 @@ public class Xml_Logica implements XMLLogicInterface {
         }
         return null;
 
+    }
+    public ObservableList<Festivos> cargarFicheroEncriptado(Window window) throws LogicError, IOException {
+        try {
+            file = datos.cargarFicheroEncriptado(window);
+            if (file != null) {
+                return datos.leerFichero(file);
+            }
+
+        } catch (DataError e) {
+            throw new LogicError(e.getMessage());
+        } catch (NullPointerException e) {
+            throw new LogicError("El fichero no es valido");
+        }
+        return null;
     }
 
 }

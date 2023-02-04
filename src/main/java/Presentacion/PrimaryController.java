@@ -4,11 +4,13 @@ import Errors.LogicError;
 import Modelos.Festivos;
 import Logica.Xml_Logica;
 import Modelos.AlertsConfig;
+import Modelos.Singleton;
 import Utils.Utils;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,6 +37,8 @@ import javafx.stage.StageStyle;
 
 public class PrimaryController implements Initializable {
 
+    Singleton singleton = Singleton.getInstance();
+    ObservableList<Festivos> listaFestivos = singleton.getListaFestivos();
     Xml_Logica xmlLogica = new Xml_Logica();
     Utils utils = new Utils();
     @FXML
@@ -72,7 +76,7 @@ public class PrimaryController implements Initializable {
 
     @FXML
     private Button neteja;
-    
+
     @FXML
     private Menu informesMenu;
 
@@ -206,18 +210,27 @@ public class PrimaryController implements Initializable {
     }
 
     @FXML
-    void importarFichero(ActionEvent event) {
+    void importarFichero(ActionEvent event) throws LogicError {
+
         try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ImportFile.fxml"));
+            Parent root = loader.load();
+            ImportFileController controller = loader.getController();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(scene);
+            stage.showAndWait();
+            stage.close();
+            tblView.setItems(listaFestivos);
+        } catch (Exception e) {
+            System.out.println(e);
             tblView.setItems(
                     xmlLogica.cargarFichero(btnmenu.getScene().getWindow()));
             nombreFiesta.getItems().addAll(xmlLogica.fiestas());
             informesMenu.setVisible(true);
-        } catch (LogicError e) {
-
-            alert.mostrarError(e.getMessage());
-
         }
-
     }
 
     @FXML
