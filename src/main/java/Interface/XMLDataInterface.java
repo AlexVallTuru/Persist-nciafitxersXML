@@ -17,7 +17,7 @@ import javafx.stage.Window;
  */
 public interface XMLDataInterface {
 
-    public void ExportarDocumento(String doc, String USERHOME, String filename, Window window);
+    public void ExportarDocumento(String doc, String USERHOME, String filename, Window window) throws DataError;
 
     public ObservableList<Festivos> FiltrarPorNombre(String nombre) throws DataError;
 

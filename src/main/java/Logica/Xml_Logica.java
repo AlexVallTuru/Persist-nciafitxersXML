@@ -59,9 +59,10 @@ public class Xml_Logica implements XMLLogicInterface {
      * @param USERHOME
      * @param filename
      * @param window
+     * @throws Errors.DataError
      * @author Aitor
      */
-    public void exportaDades(ObservableList<Festivos> export, String USERHOME, String filename, Window window) {
+    public void exportaDades(ObservableList<Festivos> export, String USERHOME, String filename, Window window) throws DataError {
         Element root = new Element("row"); //Arrel
         Element row = new Element("row"); //Sub-Arrel
         export.stream().map(list -> {
