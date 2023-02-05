@@ -1,6 +1,5 @@
 package Presentacion;
 
-import Modelos.InformeFiestas;
 import Modelos.InformeLocalidades;
 import Utils.Utils;
 import java.net.URL;
@@ -10,11 +9,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 public class InformeLocalidadesController implements Initializable {
@@ -29,7 +26,7 @@ public class InformeLocalidadesController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         Image image = new Image(utils.convertPath("images\\close.png"));
         closeButton.setImage(image);
-        //grafica.autosize();
+        grafica.autosize();
         
     }
     
@@ -41,7 +38,7 @@ public class InformeLocalidadesController implements Initializable {
 
     public void recogerDatos(ObservableList<InformeLocalidades> informes) {
         
-        for (int i=0 ; i<25;i++) {
+        for (int i=0 ; i<informes.size();i++) {
             System.out.println(informes.get(i));
             XYChart.Series dataSeries1 = new XYChart.Series();
             dataSeries1.setName(informes.get(i).getLocalidad());

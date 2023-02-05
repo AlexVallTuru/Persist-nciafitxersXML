@@ -3,11 +3,9 @@
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.control.ScrollBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 
 <AnchorPane id="AnchorPane" prefHeight="688.0" prefWidth="790.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Presentacion.InformeLocalidadesController">
    <children>
@@ -16,20 +14,14 @@
             <Image url="@../images/close.png" />
          </image>
       </ImageView>
-      <Pane layoutX="19.0" layoutY="75.0" prefHeight="493.0" prefWidth="751.0">
-         <children>
-            <BarChart fx:id="grafica" alternativeColumnFillVisible="true" barGap="10.0" prefHeight="495.0" prefWidth="656.0" title="Festes Localitats">
-              <xAxis>
-                <CategoryAxis fx:id="localidades" prefHeight="30.0" prefWidth="969.0" side="LEFT" />
-                 
+      <BarChart fx:id="grafica" alternativeColumnFillVisible="true" barGap="10.0" layoutX="50.0" layoutY="72.0" prefHeight="495.0" prefWidth="656.0" title="Festes Localitats">
+        <xAxis>
+          <CategoryAxis fx:id="localidades" prefHeight="30.0" prefWidth="969.0" side="LEFT" />
+           
               </xAxis>
-              <yAxis>
-                  <NumberAxis side="BOTTOM" tickMarkVisible="false" />
-              </yAxis>
-            </BarChart>
-            <ScrollBar layoutX="3.0" layoutY="473.0" prefHeight="14.0" prefWidth="742.0" />
-            <ScrollBar layoutX="723.0" layoutY="5.0" orientation="VERTICAL" prefHeight="462.0" prefWidth="14.0" />
-         </children>
-      </Pane>
+        <yAxis>
+            <NumberAxis side="BOTTOM" tickMarkVisible="false" />
+        </yAxis>
+      </BarChart>
    </children>
 </AnchorPane>

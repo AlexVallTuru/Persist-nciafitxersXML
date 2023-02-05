@@ -6,8 +6,8 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="215.0" prefWidth="272.0" style="-fx-background-color: aed7fc; -fx-border-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Presentacion.ImportFileController">
    <children>
-      <Button fx:id="confirmar" layoutX="73.0" layoutY="151.0" mnemonicParsing="false" onAction="#confirmar" text="Si" />
-      <Button fx:id="negar" layoutX="171.0" layoutY="151.0" mnemonicParsing="false" onAction="#negar" text="No" />
-      <Text layoutX="73.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="¿El archivo está encriptado?" wrappingWidth="156.04331970214844" />
+      <Button fx:id="confirmar" layoutX="49.0" layoutY="151.0" mnemonicParsing="false" onAction="#confirmar" prefHeight="25.0" prefWidth="49.0" text="Si" />
+      <Button fx:id="negar" layoutX="180.0" layoutY="151.0" mnemonicParsing="false" onAction="#negar" prefHeight="25.0" prefWidth="49.0" text="No" />
+      <Text layoutX="73.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="El fitxer està encriptat?" wrappingWidth="156.04331970214844" />
    </children>
 </AnchorPane>

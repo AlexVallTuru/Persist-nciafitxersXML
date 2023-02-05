@@ -15,15 +15,7 @@ import javafx.stage.Window;
  * @author Carlos
  */
 public interface XMLLogicInterface {
-        
-    public ObservableList<Festivos> FiltrarPorNombre();
-    
-    public ObservableList<Festivos> FiltrarPorFechas();
-    
-    public ObservableList<Festivos> FiltrarPorAmbito();
-    
-    public ObservableList<Festivos> FiltrarPorFiesta();
-    
+
     public ObservableList<Festivos> cargarFichero(Window w) throws LogicError;
-    
+
 }

@@ -34,30 +34,6 @@ public class Xml_Logica implements XMLLogicInterface {
     private File file;
 
     @Override
-    public ObservableList<Festivos> FiltrarPorNombre() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public ObservableList<Festivos> FiltrarPorFechas() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public ObservableList<Festivos> FiltrarPorAmbito() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public ObservableList<Festivos> FiltrarPorFiesta() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public void FiltradoCompleto() {
-
-    }
-
-    @Override
     public ObservableList<Festivos> cargarFichero(Window window) throws LogicError {
         try {
             file = datos.cargarFichero(window);
@@ -68,7 +44,7 @@ public class Xml_Logica implements XMLLogicInterface {
         } catch (DataError e) {
             throw new LogicError(e.getMessage());
         } catch (NullPointerException e) {
-            throw new LogicError("El fichero no es valido");
+            throw new LogicError(e.getMessage());
         }
         return null;
 
@@ -127,7 +103,7 @@ public class Xml_Logica implements XMLLogicInterface {
         Document doc = new Document(root);
         String contenidoXml = doc.toXML();
         String key = singleton.getContrasena();
-        contenidoXml = XMLData.Encriptacion(contenidoXml,key);
+        contenidoXml = XMLData.Encriptacion(contenidoXml, key);
         datos.ExportarDocumento(contenidoXml, USERHOME, filename, window);
     }
 
@@ -247,6 +223,19 @@ public class Xml_Logica implements XMLLogicInterface {
         }
 
     }
+    
+    /**
+     * Verifica quins camps contenen dades
+     * @param nombre
+     * @param ambit
+     * @param municipio
+     * @param localitat
+     * @param nombreFiesta
+     * @param d1
+     * @param d2
+     * @return
+     * @throws LogicError 
+     */
 
     public ObservableList<Festivos> checkTable(String nombre, String ambit, String municipio, String localitat, String nombreFiesta, LocalDate d1, LocalDate d2) throws LogicError {
         try {
@@ -268,6 +257,20 @@ public class Xml_Logica implements XMLLogicInterface {
         }
 
     }
+    
+    /**
+     * Neteja tots els filtres de la taula
+     * 
+     * @param nombre
+     * @param ambit
+     * @param municipio
+     * @param localitat
+     * @param nombreFiesta
+     * @param d1
+     * @param d2
+     * @return
+     * @throws LogicError 
+     */
 
     public ObservableList<Festivos> neteja(String nombre, String ambit, String municipio, String localitat, String nombreFiesta, LocalDate d1, LocalDate d2) throws LogicError {
         try {
@@ -291,6 +294,11 @@ public class Xml_Logica implements XMLLogicInterface {
     public Set<String> fiestas() {
         return datos.fiestas();
     }
+    
+    /**
+     * Genera informe general
+     * @return 
+     */
 
     public ObservableList<InformeFiestas> generarInforme() {
 
@@ -302,7 +310,11 @@ public class Xml_Logica implements XMLLogicInterface {
         }
         return null;
     }
-
+    
+    /**
+     * Genera informe de localitats
+     * @return 
+     */
     public ObservableList informeLocalitats() {
         try {
             return datos.generaInformeLocalidades();
@@ -313,6 +325,14 @@ public class Xml_Logica implements XMLLogicInterface {
         return null;
 
     }
+
+    /**
+     * Cargar fichero encriptado
+     * @param window
+     * @return
+     * @throws LogicError
+     * @throws IOException 
+     */
     public ObservableList<Festivos> cargarFicheroEncriptado(Window window) throws LogicError, IOException {
         try {
             file = datos.cargarFicheroEncriptado(window);

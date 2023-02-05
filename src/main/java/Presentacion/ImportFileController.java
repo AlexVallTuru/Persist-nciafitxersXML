@@ -37,10 +37,10 @@ public class ImportFileController {
     private AlertsConfig alert = new AlertsConfig();
     @FXML
     private Button confirmar;
-
+    
     @FXML
     private Button negar;
-
+    
     @FXML
     void confirmar(ActionEvent event) {
 
