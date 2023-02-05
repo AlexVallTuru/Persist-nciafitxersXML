@@ -225,6 +225,7 @@ public class PrimaryController implements Initializable {
             stage.close();
             tblView.setItems(xmlLogica.cargarFichero(btnmenu.getScene().getWindow()));
             nombreFiesta.getItems().addAll(xmlLogica.fiestas());
+            informesMenu.setVisible(true);
         } catch (Exception e) {
             alert.mostrarError(e.getMessage());
         }
