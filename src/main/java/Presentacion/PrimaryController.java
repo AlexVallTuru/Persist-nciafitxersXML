@@ -223,13 +223,10 @@ public class PrimaryController implements Initializable {
             stage.setScene(scene);
             stage.showAndWait();
             stage.close();
-            tblView.setItems(listaFestivos);
-        } catch (Exception e) {
-            System.out.println(e);
-            tblView.setItems(
-                    xmlLogica.cargarFichero(btnmenu.getScene().getWindow()));
+            tblView.setItems(xmlLogica.cargarFichero(btnmenu.getScene().getWindow()));
             nombreFiesta.getItems().addAll(xmlLogica.fiestas());
-            informesMenu.setVisible(true);
+        } catch (Exception e) {
+            alert.mostrarError(e.getMessage());
         }
     }
 

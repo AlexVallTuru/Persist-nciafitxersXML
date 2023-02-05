@@ -21,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.time.LocalDate;
 import java.util.Base64;
+import static java.util.Collections.singleton;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
@@ -42,6 +43,7 @@ import nu.xom.ParsingException;
  */
 public class XMLData implements XMLDataInterface {
 
+    Singleton singleton = Singleton.getInstance();
     private ObservableList<Festivos> festivos;
     private ObservableList<Festivos> resultados;
     private SortedSet<String> nombreFiestas;
@@ -341,7 +343,6 @@ public class XMLData implements XMLDataInterface {
                 festivos.add(new Festivos(illaValue, mbitValue, municipiValue, localitatValue, utils.convertLocalDate(dataValue), utils.capitalizeName(nom_festaValue)));
 
             }
-
             return festivos;
 
         } catch (ParsingException e) {
@@ -452,7 +453,7 @@ public class XMLData implements XMLDataInterface {
                 new FileChooser.ExtensionFilter("XML Files", "*.xml")
         );
         File selectedFile = fileChooser.showOpenDialog(window);
-        String encriptedString = fileToString(selectedFile); 
+        String encriptedString = fileToString(selectedFile);
         String datoslimpios = Desencriptacion(encriptedString, Singleton.getContrasena());
         try ( FileWriter fileWriter = new FileWriter(selectedFile)) {
             fileWriter.write(datoslimpios);
@@ -474,13 +475,13 @@ public class XMLData implements XMLDataInterface {
         throw new DataError("No se ha seleccionado un fichero");
     }
 
-  public static String fileToString(File selectedFile) {
-    try {
-      byte[] encoded = Files.readAllBytes(selectedFile.toPath());
-      return new String(encoded, StandardCharsets.UTF_8);
-    } catch (IOException e) {
-      e.printStackTrace();
-      return null;
+    public static String fileToString(File selectedFile) {
+        try {
+            byte[] encoded = Files.readAllBytes(selectedFile.toPath());
+            return new String(encoded, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
-  }
 }

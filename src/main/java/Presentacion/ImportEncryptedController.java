@@ -42,7 +42,7 @@ public class ImportEncryptedController {
             stage = (Stage) btnAccedir.getScene().getWindow();
             stage.close();
             singleton.setContrasena(txtPassword.getText());
-            setFestivos(festivosLista = xmlLogica.cargarFicheroEncriptado(btnAccedir.getScene().getWindow()));
+            //setFestivos(festivosLista = xmlLogica.cargarFicheroEncriptado(btnAccedir.getScene().getWindow()));
         }
 
     }

@@ -6,6 +6,7 @@ package Presentacion;
 
 import Errors.LogicError;
 import Logica.Xml_Logica;
+import Modelos.AlertsConfig;
 import Modelos.Festivos;
 import Modelos.Singleton;
 
@@ -33,6 +34,7 @@ public class ImportFileController {
     private Festivos festivos;
     private ObservableList<Festivos> festivosLista;
     Xml_Logica xmlLogica = new Xml_Logica();
+    private AlertsConfig alert = new AlertsConfig();
     @FXML
     private Button confirmar;
 
@@ -61,18 +63,21 @@ public class ImportFileController {
 
     @FXML
     void negar(ActionEvent event) throws LogicError, IOException {
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("primary.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        PrimaryController controller = loader.getController();
-        // Pasando la lista al controlador ImportEncryptedController
-        stage = (Stage) negar.getScene().getWindow();
-        stage.close();
-        setFestivos(festivosLista = xmlLogica.cargarFichero(negar.getScene().getWindow()));
-
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("primary.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            PrimaryController controller = loader.getController();
+            stage = (Stage) negar.getScene().getWindow();
+            stage.close();
+            //setFestivos(festivosLista = xmlLogica.cargarFichero(negar.getScene().getWindow()));
+        }catch(Exception e){
+               alert.mostrarError(e.getMessage());
+        }
     }
+
+
 
     public void setFestivos(List<Festivos> festivos) {
         Singleton singleton = Singleton.getInstance();
