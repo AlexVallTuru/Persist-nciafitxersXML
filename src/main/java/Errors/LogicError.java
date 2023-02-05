@@ -5,7 +5,7 @@
 package Errors;
 
 /**
- *
+ * Excepcions per a la capa logica
  * @author Carlos
  */
 public class LogicError extends Exception {

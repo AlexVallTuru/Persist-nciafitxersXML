@@ -115,6 +115,12 @@ public class PrimaryController implements Initializable {
 
     @FXML
     private MenuItem informe;
+    
+    @FXML
+    private MenuItem grafica;
+      
+    private AlertsConfig alert = new AlertsConfig();
+    
 
     @FXML
     void closeApp(MouseEvent event) {
@@ -140,6 +146,11 @@ public class PrimaryController implements Initializable {
         }
 
     }
+    
+    /**
+     * Neteja tots el filtres
+     * @param event 
+     */
 
     @FXML
     void limpiarTabla(ActionEvent event) {
@@ -186,6 +197,11 @@ public class PrimaryController implements Initializable {
 
         }
     }
+    
+    /**
+     * Filtrar dades
+     * @param event 
+     */
 
     @FXML
     void cercaDades(ActionEvent event) {
@@ -208,6 +224,12 @@ public class PrimaryController implements Initializable {
         tblView.refresh();
 
     }
+    
+    /**
+     * Importar un fitxer XML
+     * @param event
+     * @throws LogicError 
+     */
 
     @FXML
     void importarFichero(ActionEvent event) throws LogicError {
@@ -235,6 +257,11 @@ public class PrimaryController implements Initializable {
             alert.mostrarError(e.getMessage());
         }
     }
+    
+    /**
+     * Generar un informe amb grafica
+     * @param event 
+     */
 
     @FXML
     void informeGrafica(ActionEvent event) {
@@ -255,8 +282,10 @@ public class PrimaryController implements Initializable {
 
     }
 
-    @FXML
-    private MenuItem grafica;
+    /**
+     * Generar un informe general
+     * @param event 
+     */
 
     @FXML
     void verInforme(ActionEvent event) {
@@ -279,7 +308,11 @@ public class PrimaryController implements Initializable {
 
     }
 
-    private AlertsConfig alert = new AlertsConfig();
+    /**
+     * Inicialitzar valors de la pagina principal
+     * @param url
+     * @param rb 
+     */
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -289,9 +322,13 @@ public class PrimaryController implements Initializable {
             initValues();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            alert.mostrarError(e.getMessage());
         }
     }
+    
+    /**
+     * Inicialitzacio de valors
+     */
 
     public void initValues() {
         informesMenu.setVisible(false);

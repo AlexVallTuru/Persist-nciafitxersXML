@@ -5,7 +5,7 @@
 package Modelos;
 
 /**
- *
+ *  Clase per emmagatzemar les dades per als informes de les localitats
  * @author carlo
  */
 public class InformeLocalidades {

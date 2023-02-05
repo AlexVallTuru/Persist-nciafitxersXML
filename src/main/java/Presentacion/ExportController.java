@@ -44,7 +44,7 @@ public class ExportController {
     private PasswordField passwordFile;
 
     /**
-     * Tanca la finextra
+     * Tanca la finestra
      * 
      * @param event 
      * @author Aitor

@@ -22,13 +22,23 @@ public class EntreFechasController implements Initializable {
 
     @FXML
     private BarChart<String, Integer> grafica;
+    
+    /**
+     * Inicialitzar la finestra de la grafica
+     * @param location
+     * @param resources 
+     */
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Image image = new Image(utils.convertPath("images\\close.png"));
         closeButton.setImage(image);
     }
-
+    
+    /**
+     * Rebre dades de la table view per mostrar
+     * @param informes 
+     */
     public void recogerDatos(ObservableList<InformeFiestas> informes) {
         for (InformeFiestas informe : informes) {
 
@@ -41,6 +51,10 @@ public class EntreFechasController implements Initializable {
 
     }
 
+    /**
+     * Funció per tancar la finestra
+     * @param event 
+     */
     @FXML
     void close(MouseEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();

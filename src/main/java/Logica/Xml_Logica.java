@@ -22,7 +22,7 @@ import nu.xom.Document;
 import nu.xom.Element;
 
 /**
- *
+ *  Capa logica
  * @author Carlos
  */
 public class Xml_Logica implements XMLLogicInterface {
@@ -107,7 +107,19 @@ public class Xml_Logica implements XMLLogicInterface {
         contenidoXml = XMLData.Encriptacion(contenidoXml, key);
         datos.ExportarDocumento(contenidoXml, USERHOME, filename, window);
     }
-
+    
+    /**
+     * Funcio per filtrar les dades que s'envien per parametres
+     * @param nom
+     * @param ambit
+     * @param localitat
+     * @param municipi
+     * @param nombreFiesta
+     * @param d1
+     * @param d2
+     * @return
+     * @throws LogicError 
+     */
     public ObservableList<Festivos> cercaDades(String nom,
             String ambit, String localitat, String municipi, String nombreFiesta, LocalDate d1, LocalDate d2) throws LogicError {
 
@@ -238,6 +250,18 @@ public class Xml_Logica implements XMLLogicInterface {
      * @throws LogicError 
      */
 
+    /**
+     * Funcio per verificar quins valor s'envien per la filtració
+     * @param nombre
+     * @param ambit
+     * @param municipio
+     * @param localitat
+     * @param nombreFiesta
+     * @param d1
+     * @param d2
+     * @return
+     * @throws LogicError 
+     */
     public ObservableList<Festivos> checkTable(String nombre, String ambit, String municipio, String localitat, String nombreFiesta, LocalDate d1, LocalDate d2) throws LogicError {
         try {
 
@@ -291,6 +315,11 @@ public class Xml_Logica implements XMLLogicInterface {
         }
 
     }
+    
+    /**
+     * Retorna la observable list de la tableView sense repeticions
+     * @return 
+     */
 
     public Set<String> fiestas() {
         return datos.fiestas();

@@ -5,7 +5,7 @@
 package Interface;
 
 /**
- *
+ * Interficie per a les alertes
  * @author Carlos
  */
 public interface AlertsConfigInterface {

@@ -11,15 +11,30 @@ import java.time.format.DateTimeFormatter;
  * @author Carlos
  */
 public class Utils {
+    
+    /**
+     * Enum dels sistemes operatius
+     */
     public enum OS{
         WINDOWS,LINUX,MAC
     }
+    
+    /**
+     * Conversor de String a LocalDate
+     * @param fecha
+     * @return 
+     */
     public LocalDate convertLocalDate(String fecha) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return LocalDate.parse(fecha, formatter);
 
     }
 
+    /**
+     * Funcio per modificar els noms de les taules
+     * @param name
+     * @return 
+     */
     public String capitalizeName(String name) {
         String nueva_cadena;
         char primeraLetra = name.charAt(0);
@@ -32,6 +47,11 @@ public class Utils {
 
     }
     
+    /**
+     * Funcio per la conversio de paths
+     * @param path
+     * @return 
+     */
     public String convertPath(String path){
         String os = System.getProperty("os.name").toLowerCase();
         

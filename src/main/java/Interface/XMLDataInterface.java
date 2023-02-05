@@ -12,7 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.stage.Window;
 
 /**
- *
+ *  Interface per a les funcions de capa dades
  * @author Carlos
  */
 public interface XMLDataInterface {

@@ -21,6 +21,12 @@ public class InformeLocalidadesController implements Initializable {
     
     @FXML
     private BarChart<String, Integer> grafica;
+    
+    /**
+     * Inicialitzar finestra
+     * @param location
+     * @param resources 
+     */
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -30,12 +36,21 @@ public class InformeLocalidadesController implements Initializable {
         
     }
     
+    /**
+     * Funcionalitat per tancar finestra
+     * @param event 
+     */
+    
     @FXML
     void close(MouseEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
     }
-
+    
+    /**
+     * Recollir dades per mostrar els informes de les localitats
+     * @param informes 
+     */
     public void recogerDatos(ObservableList<InformeLocalidades> informes) {
         
         for (int i=0 ; i<informes.size();i++) {

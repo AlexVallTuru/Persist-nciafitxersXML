@@ -11,7 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.stage.Window;
 
 /**
- *
+ *  Interfaces per a la capa logica
  * @author Carlos
  */
 public interface XMLLogicInterface {

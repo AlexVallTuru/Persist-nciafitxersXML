@@ -14,7 +14,10 @@ import javafx.scene.control.Alert;
 public class AlertsConfig implements AlertsConfigInterface{
     
     
-
+    /**
+     * Alerta per mostrar els errors
+     * @param error 
+     */
     @Override
     public void mostrarError(String error) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -25,6 +28,10 @@ public class AlertsConfig implements AlertsConfigInterface{
         
     }
 
+    /**
+     * Alerta per mostrar els Warnings
+     * @param alerta 
+     */
     @Override
     public void mostrarAlerta(String alerta) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -33,6 +40,10 @@ public class AlertsConfig implements AlertsConfigInterface{
         alert.setContentText(alerta);
         alert.showAndWait();}
 
+    /**
+     * Alerta per mostrar les informacions
+     * @param info 
+     */
     @Override
     public void mostrarInfo(String info) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

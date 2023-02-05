@@ -88,6 +88,12 @@ public class XMLData implements XMLDataInterface {
             alert.mostrarError("Error creant el fitxer: " + e);
         }
     }
+    /**
+     * Filtrar dades amb un sol parametre
+     * @param filterCriteria
+     * @return
+     * @throws DataError 
+     */
 
     public ObservableList<Festivos> filtrar(Predicate<Festivos> filterCriteria) throws DataError {
         resultados = FXCollections.observableArrayList();
@@ -353,6 +359,10 @@ public class XMLData implements XMLDataInterface {
         return informe;
 
     }
+    /**
+     * Generar informe de les localitats
+     * @return 
+     */
 
     public ObservableList<InformeLocalidades> generaInformeLocalidades() {
         ObservableList<InformeLocalidades> informe = FXCollections.observableArrayList();

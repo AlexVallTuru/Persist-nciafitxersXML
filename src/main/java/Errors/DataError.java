@@ -5,7 +5,7 @@
 package Errors;
 
 /**
- *
+ * Excepcions per a la capa de dades
  * @author Carlos
  */
 public class DataError extends Exception {

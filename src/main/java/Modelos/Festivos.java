@@ -7,7 +7,7 @@ package Modelos;
 import java.time.LocalDate;
 
 /**
- *
+ *  Clase per emmagatzemar dades de la table View
  * @author Carlos
  */
 public class Festivos {
