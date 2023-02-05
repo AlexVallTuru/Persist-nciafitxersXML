@@ -10,7 +10,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="455.0" style="-fx-background-color: #aed7fc; -fx-border-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Presentacion.InformeController">
    <children>
-      <Text layoutX="192.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fiestas">
+      <Text layoutX="192.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Festes">
          <font>
             <Font size="24.0" />
          </font>
