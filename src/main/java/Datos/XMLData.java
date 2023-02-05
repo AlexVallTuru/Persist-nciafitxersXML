@@ -54,33 +54,36 @@ public class XMLData implements XMLDataInterface {
      * @param export
      * @param USERHOME
      * @param filename
+     * @param window
+     * @throws Errors.DataError
      * @author Aitor
      */
     @Override
-    public void ExportarDocumento(String export, String USERHOME, String filename, Window window) {
+    public void ExportarDocumento(String export, String USERHOME, String filename, Window window) throws DataError {
         try {
             //Demana el directori per guardar el fitxer
             DirectoryChooser saveDirectory = new DirectoryChooser();
             saveDirectory.setInitialDirectory(new File(USERHOME));
             File selectedDirectory = saveDirectory.showDialog(window);
+            
+            if (selectedDirectory == null) {
+                throw new DataError("Cap directori seleccionat");
+            } else {
+                File fitxer = new File(selectedDirectory.toString(), filename + ".xml"); //Instanciem objecte de tipus file
 
-            File fitxer = new File(selectedDirectory.toString(), filename + ".xml"); //Instanciem objecte de tipus file
+                //Creem el fitxer dins del sistema
+                if (fitxer.createNewFile()) { //Si el fitxer s'ha creat...
+                    System.out.println("El fitxer " + fitxer + " s'ha creat correctament.");
+                    FileWriter fitxerW = new FileWriter(fitxer, StandardCharsets.UTF_8); //Obrim fitxer per escriure.
+                    fitxerW.write(export); //Escrivim contingut doc (transformat a String) en fitxer
+                    fitxerW.close(); //Tanquem fitxer
 
-            //Creem el fitxer dins del sistema
-            if (fitxer.createNewFile()) { //Si el fitxer s'ha creat...
-                System.out.println("El fitxer " + fitxer + " s'ha creat correctament.");
-            } else { //Si el fitxer no s'ha creat perquè ja existeix
-                alert.mostrarError("Ja existeix un fitxer amb el mateix nom.");
-                //TODO Cancelar l'exportació si existeix un fitxer amb el mateix nom
+                    alert.mostrarInfo("El fitxer " + filename
+                            + ".xml s'ha creat correctament.");
+                } else { //Si el fitxer no s'ha creat perquè ja existeix
+                    throw new DataError("Ja existeix un fitxer amb el mateix nom.");
+                }
             }
-
-            FileWriter fitxerW = new FileWriter(fitxer, StandardCharsets.UTF_8); //Obrim fitxer per escriure.
-            fitxerW.write(export); //Escrivim contingut doc (transformat a String) en fitxer
-            fitxerW.close(); //Tanquem fitxer
-
-            alert.mostrarInfo("El fitxer " + filename
-                    + ".xml s'ha creat correctament.");
-
         } catch (IOException e) {
             alert.mostrarError("Error creant el fitxer: " + e);
         }
