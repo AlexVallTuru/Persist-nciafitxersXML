@@ -65,7 +65,7 @@ public class XMLData implements XMLDataInterface {
             DirectoryChooser saveDirectory = new DirectoryChooser();
             saveDirectory.setInitialDirectory(new File(USERHOME));
             File selectedDirectory = saveDirectory.showDialog(window);
-            
+
             if (selectedDirectory == null) {
                 throw new DataError("Cap directori seleccionat");
             } else {
@@ -88,13 +88,14 @@ public class XMLData implements XMLDataInterface {
             alert.mostrarError("Error creant el fitxer: " + e);
         }
     }
+
     /**
      * Filtrar dades amb un sol parametre
+     *
      * @param filterCriteria
      * @return
-     * @throws DataError 
+     * @throws DataError
      */
-
     public ObservableList<Festivos> filtrar(Predicate<Festivos> filterCriteria) throws DataError {
         resultados = FXCollections.observableArrayList();
         for (Festivos valor : festivos) {
@@ -359,11 +360,12 @@ public class XMLData implements XMLDataInterface {
         return informe;
 
     }
+
     /**
      * Generar informe de les localitats
-     * @return 
+     *
+     * @return
      */
-
     public ObservableList<InformeLocalidades> generaInformeLocalidades() {
         ObservableList<InformeLocalidades> informe = FXCollections.observableArrayList();
         Set<String> nombres = new HashSet<String>();
@@ -387,28 +389,41 @@ public class XMLData implements XMLDataInterface {
 
     }
 
+    /**
+     * Encripta el mensaje dado utilizando la encriptación XOR con la clave
+     * dada.
+     *
+     * @param message el mensaje a encriptar
+     * @param key la clave a utilizar para la encriptación
+     * @return el mensaje encriptado codificado en base64
+     */
     public static String Encriptacion(String message, String key) {
         byte[] messageBytes = message.getBytes(StandardCharsets.UTF_8);
         byte[] keyBytes = key.getBytes(StandardCharsets.UTF_8);
-        byte[] result = new byte[messageBytes.length];
+        byte[] resultado = new byte[messageBytes.length];
 
         for (int i = 0; i < messageBytes.length; i++) {
-            result[i] = (byte) (messageBytes[i] ^ keyBytes[i % keyBytes.length]);
+            resultado[i] = (byte) (messageBytes[i] ^ keyBytes[i % keyBytes.length]);
         }
-
-        return Base64.getEncoder().encodeToString(result);
+        return Base64.getEncoder().encodeToString(resultado);
     }
 
-    public static String Desencriptacion(String encodedMessage, String key) {
-        byte[] encodedMessageBytes = Base64.getDecoder().decode(encodedMessage);
+    /**
+     * Desencripta el mensaje codificado en base64 dado utilizando la
+     * encriptación XOR con la clave dada.
+     *
+     * @param mensaje el mensaje encriptado codificado en base64
+     * @param key la clave utilizada para la encriptación
+     * @return el mensaje desencriptado
+     */
+    public static String Desencriptacion(String mensaje, String key) {
+        byte[] encodedMessageBytes = Base64.getDecoder().decode(mensaje);
         byte[] keyBytes = key.getBytes(StandardCharsets.UTF_8);
-        byte[] result = new byte[encodedMessageBytes.length];
-
+        byte[] resultado = new byte[encodedMessageBytes.length];
         for (int i = 0; i < encodedMessageBytes.length; i++) {
-            result[i] = (byte) (encodedMessageBytes[i] ^ keyBytes[i % keyBytes.length]);
+            resultado[i] = (byte) (encodedMessageBytes[i] ^ keyBytes[i % keyBytes.length]);
         }
-        //System.out.println(result);
-        return new String(result, StandardCharsets.UTF_8);
+        return new String(resultado, StandardCharsets.UTF_8);
     }
 
     public File cargarFicheroEncriptado(Window window) throws DataError {
@@ -439,7 +454,11 @@ public class XMLData implements XMLDataInterface {
         }
         throw new DataError("No s'ha seleccionat un fitxer");
     }
-
+    /**
+     * Se le pasa un file y se transforma a String
+     * @param selectedFile
+     * @return 
+     */
     public static String fileToString(File selectedFile) {
         try {
             byte[] encoded = Files.readAllBytes(selectedFile.toPath());

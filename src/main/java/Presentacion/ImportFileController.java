@@ -37,10 +37,10 @@ public class ImportFileController {
     private AlertsConfig alert = new AlertsConfig();
     @FXML
     private Button confirmar;
-    
+
     @FXML
     private Button negar;
-    
+
     @FXML
     void confirmar(ActionEvent event) {
 
@@ -72,13 +72,16 @@ public class ImportFileController {
             stage = (Stage) negar.getScene().getWindow();
             stage.close();
             //setFestivos(festivosLista = xmlLogica.cargarFichero(negar.getScene().getWindow()));
-        }catch(Exception e){
-               alert.mostrarError(e.getMessage());
+        } catch (Exception e) {
+            alert.mostrarError(e.getMessage());
         }
     }
 
-
-
+    /**
+     * Manda la informacion de la observable a la clase Singleton
+     *
+     * @param festivos
+     */
     public void setFestivos(List<Festivos> festivos) {
         Singleton singleton = Singleton.getInstance();
         ObservableList<Festivos> listaFestivos = singleton.getListaFestivos();
